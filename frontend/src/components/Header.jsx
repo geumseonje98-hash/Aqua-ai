@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   Menu, X, MessageCircleHeart, Fish, Droplets, ShieldCheck,
-  FlaskConical, Waves,
+  FlaskConical, Waves, Sticker,
 } from "lucide-react";
 import AquaMascot from "./AquaMascot";
 
@@ -12,6 +12,7 @@ const navItems = [
   { id: "quality",   label: "Save Water",  icon: ShieldCheck,      testid: "nav-quality-link",    to: "/#quality" },
   { id: "marine",    label: "Marine Hub",  icon: Fish,             testid: "nav-marine-link",     to: "/#marine" },
   { id: "hydration", label: "Hydration",   icon: Droplets,         testid: "nav-hydration-link",  to: "/#hydration" },
+  { id: "stickers",  label: "Sticker Pack",icon: Sticker,          testid: "nav-stickers-link",   to: "/#stickers" },
   { id: "test",      label: "Check My Water", icon: FlaskConical,  testid: "nav-test-link",       to: "/test" },
 ];
 

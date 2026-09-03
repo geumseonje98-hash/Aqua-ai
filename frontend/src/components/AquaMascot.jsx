@@ -1,19 +1,18 @@
 import React, { useId } from "react";
 
 /**
- * "Aqua" — AquaSafe AI Water Guardian (Deluxe)
- * Cinematic droplet-headed hero: glossy multi-shine head with flame curl,
- * hi-tech white hoodie with glowing cyan accents & droplet crest,
- * dark pants with under-glow, sneakers with light strip,
- * holographic magic circle + runes at the base, floating data droplets.
+ * "Aqua" — AquaSafe AI Water Sorceress (creative human form)
+ * Modern-fantasy anime woman: two-tone flowing water hair, wave crown,
+ * asymmetric crop top with luminescent rune tattoos, jewelled belt, split
+ * flowing skirt, thigh-high translucent water boots, and a glowing water
+ * orb hovering in her hand. Surrounded by drifting water tendrils.
  *
- * expression: 'idle' | 'happy' | 'thinking' | 'guiding' | 'cheer' | 'surprised' | 'wave'
+ * expression: 'idle' | 'happy' | 'thinking' | 'guiding' | 'cheer' | 'surprised' | 'wave' | 'worried'
  */
 export const AquaMascot = ({ expression = "happy", size = 220, waving = false, className = "" }) => {
   const isHappy = expression === "happy" || expression === "cheer" || expression === "wave";
   const isThinking = expression === "thinking";
   const isSurprised = expression === "surprised";
-  const isGuiding = expression === "guiding";
   const isWorried = expression === "worried";
   const showWave = waving || expression === "wave" || expression === "cheer";
 
@@ -23,321 +22,407 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
 
   return (
     <svg
-      viewBox="0 0 320 500"
+      viewBox="0 0 320 620"
       width={size}
-      height={size * (500 / 320)}
+      height={size * (620 / 320)}
       className={className}
       role="img"
-      aria-label="Aqua water guardian mascot"
+      aria-label="Aqua water sorceress mascot"
       data-testid="anime-mascot-avatar"
     >
       <defs>
-        {/* DROPLET HEAD */}
-        <radialGradient id={g("head")} cx="34%" cy="26%" r="80%">
-          <stop offset="0%"  stopColor="#EAFDFF" />
-          <stop offset="18%" stopColor="#A8ECFF" />
-          <stop offset="52%" stopColor="#38BDF8" />
-          <stop offset="82%" stopColor="#0B75C9" />
-          <stop offset="100%" stopColor="#062A55" />
+        {/* Skin — porcelain with faint cool undertone */}
+        <radialGradient id={g("skin")} cx="50%" cy="30%" r="70%">
+          <stop offset="0%"  stopColor="#FFF5EA" />
+          <stop offset="65%" stopColor="#FFD9BC" />
+          <stop offset="100%" stopColor="#DBA07E" />
         </radialGradient>
-        <linearGradient id={g("headEdge")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#67E8F9" stopOpacity="0.9" />
-          <stop offset="1" stopColor="#38BDF8" stopOpacity="0.15" />
-        </linearGradient>
-        <linearGradient id={g("shine")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.98" />
-          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.05" />
+        <linearGradient id={g("shade")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#000" stopOpacity="0"/>
+          <stop offset="1" stopColor="#3B1E10" stopOpacity="0.35"/>
         </linearGradient>
 
-        {/* HOODIE */}
-        <linearGradient id={g("hoodie")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#FFFFFF" />
-          <stop offset="0.55" stopColor="#EEF6FF" />
-          <stop offset="1" stopColor="#B7CFE5" />
+        {/* Two-tone hair - LEFT side lighter */}
+        <linearGradient id={g("hairL")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0"    stopColor="#FFFFFF" />
+          <stop offset="0.35" stopColor="#A0EBFF" />
+          <stop offset="1"    stopColor="#0EA5E9" />
         </linearGradient>
-        <linearGradient id={g("hoodShade")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#D3E4F5" />
-          <stop offset="1" stopColor="#8FAECB" />
+        {/* RIGHT side deep ocean */}
+        <linearGradient id={g("hairR")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0"    stopColor="#0EA5E9" />
+          <stop offset="0.5"  stopColor="#0B4E8A" />
+          <stop offset="1"    stopColor="#020A1E" />
         </linearGradient>
-        <linearGradient id={g("crest")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#7FE7FF" />
-          <stop offset="1" stopColor="#0B4E8A" />
+        <linearGradient id={g("hairHi")} x1="0" x2="1">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.9"/>
+          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0"/>
         </linearGradient>
 
-        {/* SHIRT + PANTS */}
-        <linearGradient id={g("shirt")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#1F2937" />
-          <stop offset="1" stopColor="#020617" />
-        </linearGradient>
-        <linearGradient id={g("pants")} x1="0" x2="0" y1="0" y2="1">
+        {/* Top / bodice */}
+        <linearGradient id={g("top")} x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stopColor="#0F172A" />
           <stop offset="1" stopColor="#020617" />
         </linearGradient>
-
-        {/* SNEAKER */}
-        <linearGradient id={g("sneaker")} x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#FFFFFF" />
-          <stop offset="1" stopColor="#BAC7D8" />
+        <linearGradient id={g("topEdge")} x1="0" x2="1">
+          <stop offset="0" stopColor="#22D3EE"/>
+          <stop offset="1" stopColor="#00F5D4"/>
         </linearGradient>
 
-        {/* EYES */}
-        <radialGradient id={g("iris")} cx="35%" cy="30%" r="80%">
-          <stop offset="0%"  stopColor="#E0FBFF" />
-          <stop offset="40%" stopColor="#38BDF8" />
-          <stop offset="80%" stopColor="#0369A1" />
+        {/* Skirt - split flowing */}
+        <linearGradient id={g("skirt")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0"    stopColor="#22D3EE" stopOpacity="0.95"/>
+          <stop offset="0.4"  stopColor="#0EA5E9" stopOpacity="0.9"/>
+          <stop offset="1"    stopColor="#052A55" stopOpacity="0.85"/>
+        </linearGradient>
+        <linearGradient id={g("skirtHi")} x1="0" x2="1">
+          <stop offset="0" stopColor="#A6ECFF" stopOpacity="0.6"/>
+          <stop offset="1" stopColor="#22D3EE" stopOpacity="0.05"/>
+        </linearGradient>
+
+        {/* Water boots - translucent water */}
+        <linearGradient id={g("boot")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#A6ECFF" stopOpacity="0.75"/>
+          <stop offset="1" stopColor="#0369A1" stopOpacity="0.9"/>
+        </linearGradient>
+
+        {/* Water orb */}
+        <radialGradient id={g("orb")} cx="35%" cy="30%" r="70%">
+          <stop offset="0%"  stopColor="#FFFFFF" />
+          <stop offset="35%" stopColor="#67E8F9" />
+          <stop offset="80%" stopColor="#0EA5E9" />
+          <stop offset="100%" stopColor="#020A1E" />
+        </radialGradient>
+
+        {/* Eyes */}
+        <radialGradient id={g("iris")} cx="35%" cy="25%" r="90%">
+          <stop offset="0%"  stopColor="#DBFCFF" />
+          <stop offset="35%" stopColor="#22C4EE" />
+          <stop offset="70%" stopColor="#0369A1" />
           <stop offset="100%" stopColor="#020617" />
         </radialGradient>
 
-        {/* MAGIC CIRCLE / SPLASH */}
+        {/* Lips */}
+        <linearGradient id={g("lip")} x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#F472B6" />
+          <stop offset="1" stopColor="#9F1239" />
+        </linearGradient>
+
+        {/* Water tendril */}
+        <linearGradient id={g("tendril")} x1="0" x2="1">
+          <stop offset="0" stopColor="#A6ECFF" stopOpacity="0" />
+          <stop offset="0.5" stopColor="#22D3EE" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#0369A1" stopOpacity="0" />
+        </linearGradient>
+
+        {/* Splash */}
         <radialGradient id={g("floor")} cx="50%" cy="50%" r="50%">
-          <stop offset="0"   stopColor="#22D3EE" stopOpacity="0.85" />
+          <stop offset="0"    stopColor="#22D3EE" stopOpacity="0.9" />
           <stop offset="0.55" stopColor="#0EA5E9" stopOpacity="0.35" />
-          <stop offset="1"   stopColor="#0B4E8A" stopOpacity="0" />
+          <stop offset="1"    stopColor="#020A1E" stopOpacity="0" />
         </radialGradient>
         <linearGradient id={g("splash")} x1="0" x2="0" y1="0" y2="1">
           <stop offset="0" stopColor="#A5F3FC" />
           <stop offset="1" stopColor="#0369A1" />
         </linearGradient>
 
-        {/* Glow filter */}
         <filter id={g("glow")} x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="6" result="b" />
+          <feGaussianBlur stdDeviation="4" result="b" />
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <filter id={g("soft")} x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="3.6" />
+        <filter id={g("softglow")} x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="8" />
         </filter>
       </defs>
 
-      {/* ==================== HOLO CIRCLE / MAGIC FLOOR ==================== */}
+      {/* ============ WATER FLOOR + MAGIC CIRCLE ============ */}
+      <ellipse cx="160" cy="590" rx="150" ry="18" fill={`url(#${g("floor")})`} />
+      <g className="aq-spin-slow" style={{ transformOrigin: "160px 590px" }}>
+        <ellipse cx="160" cy="590" rx="128" ry="14" fill="none"
+                 stroke="#22D3EE" strokeWidth="1.2" strokeDasharray="6 6" opacity="0.85"/>
+        <ellipse cx="160" cy="590" rx="100" ry="10" fill="none"
+                 stroke="#67E8F9" strokeWidth="0.8" strokeDasharray="2 4" opacity="0.6"/>
+      </g>
+      {/* Runes */}
+      {[0, 60, 120, 180, 240, 300].map((deg, i) => {
+        const rad = (deg * Math.PI) / 180;
+        const x = 160 + Math.cos(rad) * 118;
+        const y = 590 + Math.sin(rad) * 12;
+        return (
+          <g key={i} transform={`translate(${x} ${y})`}>
+            <path d="M -4 0 L 0 -6 L 4 0 L 0 6 Z" fill="#7FE7FF"/>
+            <circle r="1.4" fill="#FFFFFF"/>
+          </g>
+        );
+      })}
+      <path d="M50 588
+               C 72 566 100 566 118 586
+               C 128 570 148 564 160 570
+               C 172 564 188 570 196 586
+               C 214 566 240 566 258 588
+               C 258 604 220 614 154 614
+               C 88 614 50 604 50 588 Z"
+            fill={`url(#${g("splash")})`} opacity="0.9" />
+
+      {/* ============ WATER TENDRILS BEHIND ============ */}
+      <g opacity="0.85" filter={`url(#${g("glow")})`}>
+        <path d="M40 300 C 20 340 40 400 30 460 C 26 490 46 500 60 490"
+              stroke={`url(#${g("tendril")})`} strokeWidth="6" fill="none" strokeLinecap="round" className="aq-float-a"/>
+        <path d="M290 260 C 306 300 288 360 300 420 C 306 450 288 470 272 460"
+              stroke={`url(#${g("tendril")})`} strokeWidth="6" fill="none" strokeLinecap="round" className="aq-float-b"/>
+        <path d="M14 180 C 24 220 14 260 30 280"
+              stroke={`url(#${g("tendril")})`} strokeWidth="4" fill="none" strokeLinecap="round" className="aq-float-b"/>
+        <path d="M304 200 C 292 240 306 280 288 300"
+              stroke={`url(#${g("tendril")})`} strokeWidth="4" fill="none" strokeLinecap="round" className="aq-float-a"/>
+      </g>
+
+      {/* ============ LONG BACK HAIR (asymmetric two-tone) ============ */}
+      {/* LEFT LIGHT SIDE */}
+      <path d="M78 170
+               C 46 220 32 300 42 380
+               C 50 442 74 494 100 508
+               L 158 508
+               L 158 130 Z"
+            fill={`url(#${g("hairL")})`} />
+      {/* RIGHT DARK SIDE */}
+      <path d="M242 170
+               C 274 220 288 300 278 380
+               C 270 442 246 494 220 508
+               L 162 508
+               L 162 130 Z"
+            fill={`url(#${g("hairR")})`} />
+      {/* Hair strand highlights */}
+      <path d="M70 220 C 58 300 72 400 90 460"
+            stroke={`url(#${g("hairHi")})`} strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.85"/>
+      <path d="M110 260 C 106 340 112 420 120 470"
+            stroke={`url(#${g("hairHi")})`} strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.5"/>
+      <path d="M250 220 C 262 300 248 400 230 460"
+            stroke="#67E8F9" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.55"/>
+      <path d="M210 260 C 214 340 208 420 200 470"
+            stroke="#67E8F9" strokeWidth="1.5" fill="none" strokeLinecap="round" opacity="0.4"/>
+
+      {/* ============ LEGS / WATER BOOTS ============ */}
+      {/* Left leg */}
+      <path d="M126 400 C 122 460 118 520 122 560 C 124 574 138 578 142 570 C 146 552 148 496 150 420 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      {/* Right leg */}
+      <path d="M194 400 C 198 460 202 520 198 560 C 196 574 182 578 178 570 C 174 552 172 496 170 420 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      {/* Water boot L */}
+      <path d="M116 500 C 112 526 118 566 130 578 L 148 578 C 152 566 152 526 150 500 Z"
+            fill={`url(#${g("boot")})`} stroke="#38BDF8" strokeWidth="1.4"/>
+      <path d="M120 510 C 118 540 130 566 138 574" stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.85"/>
+      {/* Water boot R */}
+      <path d="M170 500 C 168 526 168 566 172 578 L 190 578 C 202 566 208 526 204 500 Z"
+            fill={`url(#${g("boot")})`} stroke="#38BDF8" strokeWidth="1.4"/>
+      <path d="M182 510 C 190 540 202 566 200 574" stroke="#FFFFFF" strokeWidth="1.2" fill="none" opacity="0.85"/>
+      {/* Boot glow rim */}
+      <path d="M112 500 L 154 500 M 166 500 L 210 500" stroke="#22D3EE" strokeWidth="2.5" filter={`url(#${g("glow")})`}/>
+
+      {/* ============ SKIRT (split flowing) ============ */}
+      {/* Left flare */}
+      <path d="M110 372
+               C 96 400 82 452 68 496
+               C 84 508 106 512 128 496
+               C 128 452 130 400 130 372 Z"
+            fill={`url(#${g("skirt")})`} stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
+      {/* Right flare */}
+      <path d="M210 372
+               C 224 400 238 452 252 496
+               C 236 508 214 512 192 496
+               C 192 452 190 400 190 372 Z"
+            fill={`url(#${g("skirt")})`} stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
+      {/* Center panel (front, showing leg gap) */}
+      <path d="M130 372 L 190 372 L 194 396 L 126 396 Z"
+            fill={`url(#${g("skirt")})`} opacity="0.9"/>
+      {/* Skirt highlights */}
+      <path d="M100 380 C 90 420 80 460 74 490" stroke={`url(#${g("skirtHi")})`} strokeWidth="6" fill="none" strokeLinecap="round" opacity="0.85"/>
+      <path d="M220 380 C 230 420 240 460 246 490" stroke={`url(#${g("skirtHi")})`} strokeWidth="6" fill="none" strokeLinecap="round" opacity="0.85"/>
+      {/* Skirt lace bottom */}
+      <path d="M68 496 Q 96 508 128 498 M 192 498 Q 220 508 252 496" fill="none" stroke="#67E8F9" strokeWidth="1.4" opacity="0.9"/>
+
+      {/* ============ BELT WITH GEM ============ */}
+      <path d="M104 360 L 216 360 L 220 378 L 100 378 Z" fill="#0F172A" stroke="#0B4E8A" strokeWidth="1"/>
+      <path d="M100 372 L 220 372" stroke="#22D3EE" strokeWidth="2" filter={`url(#${g("glow")})`}/>
+      {/* Center gem */}
+      <g transform="translate(160 371)">
+        <path d="M0 -10 L 8 0 L 0 10 L -8 0 Z" fill="#22D3EE" stroke="#0B4E8A" strokeWidth="1"/>
+        <path d="M0 -6 L 4 0 L 0 6 L -4 0 Z" fill="#DBFCFF" opacity="0.8"/>
+        <circle r="1.6" fill="#FFFFFF"/>
+      </g>
+
+      {/* ============ TORSO (crop top) ============ */}
+      {/* Bare midriff */}
+      <path d="M124 306 Q 160 316 196 306 L 200 358 L 120 358 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.12)" strokeWidth="1"/>
+      {/* Rune line on stomach */}
+      <path d="M148 336 q 6 -4 12 0 t 12 0" stroke="#22D3EE" strokeWidth="1.6" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
+      <circle cx="160" cy="336" r="1.4" fill="#22D3EE" filter={`url(#${g("glow")})`}/>
+
+      {/* Crop top */}
+      <path d="M104 258
+               C 96 274 96 296 108 310
+               L 212 310
+               C 224 296 224 274 216 258
+               C 200 268 180 268 172 262
+               Q 160 268 148 262
+               C 140 268 120 268 104 258 Z"
+            fill={`url(#${g("top")})`} stroke={`url(#${g("topEdge")})`} strokeWidth="1.6"/>
+      {/* Top edge glow */}
+      <path d="M104 258 C 128 246 192 246 216 258" stroke={`url(#${g("topEdge")})`} strokeWidth="2" fill="none" filter={`url(#${g("glow")})`}/>
+      {/* Asymmetric cutout (right shoulder off) */}
+      <path d="M186 258 L 214 258 L 212 268 L 188 264 Z" fill={`url(#${g("skin")})`} opacity="0.9"/>
+      {/* Top rune */}
+      <path d="M138 286 q 8 -6 16 0 t 16 0 t 12 -2" stroke="#22D3EE" strokeWidth="1.5" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
+
+      {/* ============ NECK & COLLARBONE ============ */}
+      <path d="M144 232 L 144 262 Q 160 272 176 262 L 176 232 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      <path d="M136 258 Q 160 268 184 258" fill="none" stroke={`url(#${g("shade")})`} strokeWidth="3"/>
+
+      {/* Rune choker */}
+      <path d="M138 250 Q 160 260 182 250" fill="none" stroke="#22D3EE" strokeWidth="2.4" filter={`url(#${g("glow")})`}/>
+      <circle cx="160" cy="258" r="3" fill="#22D3EE" stroke="#FFFFFF" strokeWidth="0.8" filter={`url(#${g("glow")})`}/>
+
+      {/* ============ ARMS ============ */}
+      {/* Left arm (holding water orb OUT front) */}
+      <path d="M106 274
+               C 76 292 56 328 60 380
+               C 62 400 84 402 92 388
+               C 100 372 100 338 116 306 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      {/* Rune on arm */}
+      <path d="M78 320 q 4 -6 10 -2 t 10 -2" stroke="#22D3EE" strokeWidth="1.5" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
+      {/* Left hand cupped */}
       <g>
-        <ellipse cx="160" cy="470" rx="150" ry="20" fill={`url(#${g("floor")})`} />
-        {/* magic runic ring */}
-        <g className="aq-spin-slow" style={{ transformOrigin: "160px 470px" }}>
-          <ellipse cx="160" cy="470" rx="126" ry="16" fill="none"
-                   stroke="#22D3EE" strokeWidth="1.2" strokeDasharray="6 6" opacity="0.9"/>
-          <ellipse cx="160" cy="470" rx="100" ry="12" fill="none"
-                   stroke="#67E8F9" strokeWidth="0.8" strokeDasharray="2 6" opacity="0.7"/>
-        </g>
-        {/* runes */}
-        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
-          const rad = (deg * Math.PI) / 180;
-          const x = 160 + Math.cos(rad) * 118;
-          const y = 470 + Math.sin(rad) * 14;
-          return (
-            <g key={i} transform={`translate(${x} ${y})`}>
-              <circle r="3" fill="#7FE7FF" opacity="0.9" />
-              <circle r="1.2" fill="#FFFFFF" />
-            </g>
-          );
-        })}
-        {/* Splash ring */}
-        <path d="M60 468
-                 C 80 448 106 448 122 466
-                 C 130 452 148 446 160 452
-                 C 172 446 190 452 198 466
-                 C 214 448 240 448 260 468
-                 C 260 484 224 494 160 494
-                 C 96 494 60 484 60 468 Z"
-              fill={`url(#${g("splash")})`} opacity="0.9" />
-        {/* Small splash droplets */}
-        <circle cx="42" cy="454" r="4" fill="#7FE7FF" />
-        <circle cx="30" cy="440" r="3" fill="#7FE7FF" opacity="0.9" />
-        <circle cx="286" cy="450" r="4" fill="#7FE7FF" />
-        <circle cx="298" cy="436" r="3" fill="#7FE7FF" opacity="0.9" />
-        <circle cx="96" cy="438" r="3" fill="#A7F3D0" />
-        <circle cx="232" cy="438" r="3" fill="#A7F3D0" />
+        <ellipse cx="72" cy="394" rx="14" ry="12" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+        <path d="M64 394 q 6 -8 16 -6" stroke="rgba(11,32,64,0.2)" strokeWidth="0.8" fill="none"/>
+        {/* Bracelet */}
+        <ellipse cx="72" cy="380" rx="12" ry="3.8" fill="#F5D48A" stroke="#B45309" strokeWidth="0.8"/>
       </g>
-
-      {/* Under-body glow */}
-      <ellipse cx="160" cy="430" rx="70" ry="16" fill="#22D3EE" opacity="0.55" filter={`url(#${g("soft")})`} />
-
-      {/* ==================== SNEAKERS ==================== */}
+      {/* Water orb hovering above left hand */}
       <g>
-        {/* Left */}
-        <path d="M96 424 L 96 452 C 96 464 106 470 122 470 L 148 470 C 156 470 160 464 160 456 L 160 424 Z"
-              fill={`url(#${g("sneaker")})`} stroke="#8FAECB" strokeWidth="1.4"/>
-        {/* Blue light strip */}
-        <path d="M96 450 L 160 450" stroke="#22D3EE" strokeWidth="3" filter={`url(#${g("glow")})`}/>
-        <path d="M96 450 L 160 450" stroke="#0EA5E9" strokeWidth="1.5"/>
-        {/* Laces */}
-        <path d="M118 430 L 118 448 M 128 430 L 128 448 M 138 430 L 138 448 M 148 430 L 148 448"
-              stroke="#8FAECB" strokeWidth="1" fill="none"/>
-        {/* Right */}
-        <path d="M160 424 L 160 456 C 160 464 164 470 172 470 L 198 470 C 214 470 224 464 224 452 L 224 424 Z"
-              fill={`url(#${g("sneaker")})`} stroke="#8FAECB" strokeWidth="1.4"/>
-        <path d="M160 450 L 224 450" stroke="#22D3EE" strokeWidth="3" filter={`url(#${g("glow")})`}/>
-        <path d="M160 450 L 224 450" stroke="#0EA5E9" strokeWidth="1.5"/>
-        <path d="M172 430 L 172 448 M 182 430 L 182 448 M 192 430 L 192 448 M 202 430 L 202 448"
-              stroke="#8FAECB" strokeWidth="1" fill="none"/>
+        <circle cx="72" cy="366" r="20" fill={`url(#${g("orb")})`} filter={`url(#${g("glow")})`}/>
+        <ellipse cx="66" cy="358" rx="6" ry="4" fill="#FFFFFF" opacity="0.85"/>
+        <circle cx="80" cy="374" r="2.4" fill="#FFFFFF" opacity="0.7"/>
+        <path d="M56 372 q 6 -10 16 -8" stroke="#FFFFFF" strokeWidth="1.5" fill="none" opacity="0.5"/>
+        {/* Aura */}
+        <circle cx="72" cy="366" r="26" fill="none" stroke="#22D3EE" strokeWidth="1" opacity="0.7" filter={`url(#${g("softglow")})`}/>
+        {/* Tiny fish inside */}
+        <path d="M66 366 q 4 -3 8 0 q -2 2 -4 0 z" fill="#F87171"/>
+        <circle cx="67" cy="365" r="0.8" fill="#0B1220"/>
       </g>
 
-      {/* ==================== PANTS ==================== */}
-      <g>
-        <path d="M108 336 L 100 428 L 158 428 L 160 348 Z"
-              fill={`url(#${g("pants")})`} stroke="#0B1220" strokeWidth="1"/>
-        <path d="M212 336 L 220 428 L 162 428 L 160 348 Z"
-              fill={`url(#${g("pants")})`} stroke="#0B1220" strokeWidth="1"/>
-        {/* Cyan side stripes */}
-        <path d="M104 356 L 100 420" stroke="#22D3EE" strokeWidth="2" opacity="0.85" filter={`url(#${g("glow")})`}/>
-        <path d="M216 356 L 220 420" stroke="#22D3EE" strokeWidth="2" opacity="0.85" filter={`url(#${g("glow")})`}/>
-        {/* Belt line */}
-        <rect x="106" y="332" width="108" height="8" fill="#0B1220" />
-        <rect x="106" y="332" width="108" height="1.5" fill="#22D3EE" opacity="0.8"/>
-      </g>
-
-      {/* ==================== TORSO ==================== */}
-      {/* Shirt behind */}
-      <path d="M116 220 L 116 336 L 204 336 L 204 220 Z" fill={`url(#${g("shirt")})`} />
-      {/* V neck darker */}
-      <path d="M148 226 L 160 250 L 172 226 Z" fill="#020617" />
-
-      {/* Hoodie left panel */}
-      <path d="M84 214
-               C 68 240 66 296 84 340
-               L 152 340
-               L 160 246
-               L 132 220 Z"
-            fill={`url(#${g("hoodie")})`} stroke="#8FAECB" strokeWidth="1.6"/>
-      {/* Hoodie right panel */}
-      <path d="M236 214
-               C 252 240 254 296 236 340
-               L 168 340
-               L 160 246
-               L 188 220 Z"
-            fill={`url(#${g("hoodie")})`} stroke="#8FAECB" strokeWidth="1.6"/>
-
-      {/* Hood collar */}
-      <path d="M96 214 C 116 200 204 200 224 214 L 216 226 C 196 216 124 216 104 226 Z"
-            fill={`url(#${g("hoodShade")})`} stroke="#8FAECB" strokeWidth="1.2"/>
-
-      {/* Cyan tech accent lines on hoodie */}
-      <path d="M96 250 C 100 270 108 306 100 332" stroke="#22D3EE" strokeWidth="1.6" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
-      <path d="M224 250 C 220 270 212 306 220 332" stroke="#22D3EE" strokeWidth="1.6" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
-
-      {/* Drawstrings */}
-      <line x1="136" y1="222" x2="132" y2="256" stroke="#8FAECB" strokeWidth="2"/>
-      <line x1="184" y1="222" x2="188" y2="256" stroke="#8FAECB" strokeWidth="2"/>
-      <circle cx="132" cy="260" r="4.5" fill="#22D3EE" filter={`url(#${g("glow")})`}/>
-      <circle cx="188" cy="260" r="4.5" fill="#22D3EE" filter={`url(#${g("glow")})`}/>
-      <circle cx="132" cy="260" r="2" fill="#FFFFFF" />
-      <circle cx="188" cy="260" r="2" fill="#FFFFFF" />
-
-      {/* Pocket line */}
-      <path d="M112 296 C 132 314 188 314 208 296" stroke="#8FAECB" strokeWidth="1.6" fill="none"/>
-
-      {/* Zip */}
-      <line x1="160" y1="230" x2="160" y2="336" stroke="#0B1220" strokeWidth="1.8" strokeDasharray="3 2"/>
-      <circle cx="160" cy="228" r="4" fill="#22D3EE" filter={`url(#${g("glow")})`}/>
-
-      {/* Droplet crest */}
-      <g transform="translate(126 268)">
-        <path d="M0 0 C -8 12 -14 20 -14 28 a 14 14 0 0 0 28 0 c 0 -8 -6 -16 -14 -28 z"
-              fill={`url(#${g("crest")})`} stroke="#0B4E8A" strokeWidth="1.2"/>
-        <path d="M-4 14 q 0 -6 4 -12" stroke="#FFFFFF" strokeWidth="2" fill="none" opacity="0.75" strokeLinecap="round"/>
-        <circle cx="-2" cy="20" r="2" fill="#FFFFFF" opacity="0.85"/>
-      </g>
-
-      {/* ==================== ARMS ==================== */}
-      {/* Left arm resting */}
-      <path d="M84 222
-               C 66 252 60 300 68 336
-               C 70 348 86 352 94 344
-               C 100 336 100 302 106 268 Z"
-            fill={`url(#${g("hoodie")})`} stroke="#8FAECB" strokeWidth="1.6"/>
-      {/* Left glow line */}
-      <path d="M78 244 C 74 274 74 308 82 336" stroke="#22D3EE" strokeWidth="1.4" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
-      {/* Left hand */}
-      <g>
-        <circle cx="80" cy="348" r="13" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-        <path d="M72 344 q 3 -6 8 -6 q 4 0 5 4" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8" fill="none"/>
-      </g>
-
-      {/* Right arm - waving up */}
-      <g className={showWave ? "aq-wave-arm" : ""} style={{ transformOrigin: "228px 224px" }}>
+      {/* Right arm - dynamic (waving) */}
+      <g className={showWave ? "aq-wave-arm" : ""} style={{ transformOrigin: "216px 274px" }}>
         {showWave ? (
           <>
-            <path d="M220 214
-                     C 252 194 280 158 288 116
-                     C 292 100 278 88 262 96
-                     C 240 108 218 148 202 194 Z"
-                  fill={`url(#${g("hoodie")})`} stroke="#8FAECB" strokeWidth="1.6"/>
-            {/* Cyan glow line on sleeve */}
-            <path d="M228 200 C 250 176 268 148 274 118" stroke="#22D3EE" strokeWidth="1.4" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
-            {/* Sleeve cuff */}
-            <ellipse cx="278" cy="104" rx="13" ry="7" fill="#DDEEFA" transform="rotate(-32 278 104)" stroke="#8FAECB" strokeWidth="1"/>
-            {/* Hand */}
-            <g transform="translate(284 96)">
-              <circle r="15" fill="#F8C8A8" stroke="rgba(11,32,64,0.18)" strokeWidth="1"/>
-              <path d="M-10 -8 q 3 -8 8 -8 q 4 0 5 4 z"  fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-              <path d="M-3 -14 q 2 -8 8 -8 q 5 0 5 4 z" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-              <path d="M4 -15 q 2 -8 8 -6 q 4 1 4 5 z"  fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-              <path d="M10 -12 q 4 -6 8 -3 q 3 2 2 5 z" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-              <circle r="17" fill="none" stroke="#22D3EE" strokeWidth="0.8" opacity="0.65" filter={`url(#${g("glow")})`}/>
+            <path d="M212 268
+                     C 240 240 268 200 278 152
+                     C 282 134 268 124 254 130
+                     C 232 142 214 176 200 218 Z"
+                  fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+            {/* Rune on arm */}
+            <path d="M238 194 q 4 -6 10 -2 t 10 -2" stroke="#22D3EE" strokeWidth="1.5" fill="none" opacity="0.85" filter={`url(#${g("glow")})`} transform="rotate(-30 244 190)"/>
+            {/* Bracelet */}
+            <ellipse cx="270" cy="140" rx="11" ry="4.4" fill="#F5D48A" stroke="#B45309" strokeWidth="0.8" transform="rotate(-32 270 140)"/>
+            {/* Waving hand */}
+            <g transform="translate(274 126)">
+              <ellipse rx="14" ry="15" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+              <path d="M-9 -8 q 2 -8 6 -8 q 4 0 5 4 z"  fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M-2 -15 q 2 -8 6 -8 q 4 0 5 4 z" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M4 -16 q 2 -8 6 -6 q 3 1 3 5 z"  fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M10 -12 q 3 -6 6 -3 q 2 2 2 5 z" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              {/* Nail polish */}
+              <circle cx="-3" cy="-14" r="1.2" fill="#F472B6"/>
+              <circle cx="3"  cy="-16" r="1.2" fill="#F472B6"/>
+              <circle cx="9"  cy="-14" r="1.2" fill="#F472B6"/>
             </g>
           </>
         ) : (
           <>
-            <path d="M236 222
-                     C 254 252 260 300 252 336
-                     C 250 348 234 352 226 344
-                     C 220 336 220 302 214 268 Z"
-                  fill={`url(#${g("hoodie")})`} stroke="#8FAECB" strokeWidth="1.6"/>
-            <path d="M242 244 C 246 274 246 308 238 336" stroke="#22D3EE" strokeWidth="1.4" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
-            <circle cx="240" cy="348" r="13" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+            <path d="M216 274
+                     C 244 292 264 328 260 380
+                     C 258 400 236 402 228 388
+                     C 220 372 220 338 204 306 Z"
+                  fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+            <path d="M244 320 q -4 -6 -10 -2 t -10 -2" stroke="#22D3EE" strokeWidth="1.5" fill="none" opacity="0.85" filter={`url(#${g("glow")})`}/>
+            <ellipse cx="248" cy="394" rx="14" ry="12" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+            <ellipse cx="248" cy="380" rx="12" ry="3.8" fill="#F5D48A" stroke="#B45309" strokeWidth="0.8"/>
           </>
         )}
       </g>
 
-      {/* ==================== HEAD (droplet with flame curl) ==================== */}
-      {/* Outer soft aura */}
-      <ellipse cx="160" cy="150" rx="102" ry="112" fill="#22D3EE" opacity="0.14" filter={`url(#${g("soft")})`} />
+      {/* ============ FACE ============ */}
+      <path d="M110 176
+               C 110 128 132 96 160 96
+               C 188 96 210 128 210 176
+               C 210 212 194 236 160 240
+               C 126 236 110 212 110 176 Z"
+            fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.12)" strokeWidth="1"/>
+      {/* Cheek shading */}
+      <path d="M114 190 Q 130 232 160 236" fill="none" stroke={`url(#${g("shade")})`} strokeWidth="3" opacity="0.85"/>
+      <path d="M206 190 Q 190 232 160 236" fill="none" stroke={`url(#${g("shade")})`} strokeWidth="3" opacity="0.85"/>
 
-      {/* Flame curl top */}
-      <path d="M160 18
-               C 144 62 156 96 184 100
-               C 208 104 226 88 226 62
-               C 226 84 218 108 190 122
-               C 168 132 142 122 136 100
-               C 130 82 132 46 160 18 Z"
-            fill={`url(#${g("head")})`} stroke="rgba(255,255,255,0.4)" strokeWidth="1.4"/>
-      <path d="M160 32 C 152 60 160 84 176 90" stroke="url(#${g('shine')})" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
+      {/* Front bangs - swept */}
+      {/* Left side longer sweep */}
+      <path d="M108 158
+               C 108 122 130 100 156 100
+               C 154 128 138 148 122 168
+               C 116 170 110 168 108 158 Z"
+            fill={`url(#${g("hairL")})`}/>
+      {/* Right side shorter */}
+      <path d="M212 158
+               C 212 122 190 100 164 100
+               C 168 122 184 140 200 158
+               C 206 162 210 162 212 158 Z"
+            fill={`url(#${g("hairR")})`}/>
+      {/* Side locks */}
+      <path d="M100 168 C 92 220 96 260 116 278 C 100 262 88 240 88 214 C 88 194 92 178 100 168 Z" fill={`url(#${g("hairL")})`}/>
+      <path d="M220 168 C 228 220 224 260 204 278 C 220 262 232 240 232 214 C 232 194 228 178 220 168 Z" fill={`url(#${g("hairR")})`}/>
 
-      {/* Main head body */}
-      <path d="M160 82
-               C 100 130 70 178 70 224
-               a 90 84 0 0 0 180 0
-               C 250 178 220 130 160 82 Z"
-            fill={`url(#${g("head")})`} stroke="rgba(255,255,255,0.4)" strokeWidth="1.6"/>
+      {/* CROWN (coral + gem tiara) */}
+      <g transform="translate(160 100)">
+        <path d="M-40 0 Q -32 -14 -22 -4 Q -12 -22 0 -8 Q 12 -22 22 -4 Q 32 -14 40 0 L 36 8 L -36 8 Z"
+              fill="#F5D48A" stroke="#B45309" strokeWidth="1"/>
+        {/* Center droplet gem */}
+        <path d="M0 -20 C -4 -14 -6 -8 -6 -4 a 6 6 0 0 0 12 0 c 0 -4 -2 -10 -6 -16 z" fill="#22D3EE" stroke="#0B4E8A" strokeWidth="1"/>
+        <circle cx="-1" cy="-8" r="1.4" fill="#FFFFFF"/>
+        {/* Side gems */}
+        <circle cx="-22" cy="-2" r="3" fill="#F472B6" stroke="#9F1239" strokeWidth="0.6"/>
+        <circle cx="22"  cy="-2" r="3" fill="#F472B6" stroke="#9F1239" strokeWidth="0.6"/>
+        <circle cx="-32" cy="2"  r="2" fill="#FFFFFF" stroke="#93C5FD" strokeWidth="0.4"/>
+        <circle cx="32"  cy="2"  r="2" fill="#FFFFFF" stroke="#93C5FD" strokeWidth="0.4"/>
+      </g>
 
-      {/* Rim light */}
-      <path d="M78 208 a 82 82 0 0 1 164 0" fill="none" stroke={`url(#${g("headEdge")})`} strokeWidth="2" opacity="0.85"/>
+      {/* Face rune (below left eye) */}
+      <path d="M120 200 l 6 4 l -2 6" stroke="#22D3EE" strokeWidth="1.6" fill="none" strokeLinecap="round" filter={`url(#${g("glow")})`}/>
 
-      {/* Glossy shines */}
-      <path d="M112 128 C 96 168 98 210 116 232"
-            stroke={`url(#${g("shine")})`} strokeWidth="14" fill="none" strokeLinecap="round" opacity="0.85"/>
-      <path d="M108 240 C 108 244 112 252 118 258"
-            stroke={`url(#${g("shine")})`} strokeWidth="6" fill="none" strokeLinecap="round" opacity="0.75"/>
-      <ellipse cx="208" cy="150" rx="10" ry="7" fill="#FFFFFF" opacity="0.9"/>
-      <circle cx="220" cy="176" r="3.4" fill="#FFFFFF" opacity="0.75"/>
-      <circle cx="82"  cy="220" r="4"   fill="#FFFFFF" opacity="0.5"/>
+      {/* Ears + earrings (dangling) */}
+      <ellipse cx="108" cy="182" rx="5" ry="9" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      <ellipse cx="212" cy="182" rx="5" ry="9" fill={`url(#${g("skin")})`} stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+      {/* Dangling earring L */}
+      <line x1="108" y1="192" x2="108" y2="206" stroke="#F5D48A" strokeWidth="1"/>
+      <circle cx="108" cy="210" r="3" fill="#22D3EE" stroke="#0B4E8A" strokeWidth="0.6"/>
+      <line x1="212" y1="192" x2="212" y2="206" stroke="#F5D48A" strokeWidth="1"/>
+      <circle cx="212" cy="210" r="3" fill="#22D3EE" stroke="#0B4E8A" strokeWidth="0.6"/>
 
       {/* Cheek blush */}
-      <ellipse cx="102" cy="238" rx="12" ry="7" fill="rgba(253,164,175,0.55)"/>
-      <ellipse cx="218" cy="238" rx="12" ry="7" fill="rgba(253,164,175,0.55)"/>
+      <ellipse cx="124" cy="204" rx="10" ry="5" fill="rgba(251,113,133,0.4)"/>
+      <ellipse cx="196" cy="204" rx="10" ry="5" fill="rgba(251,113,133,0.4)"/>
 
       {/* Eyebrows */}
       {!isSurprised && (
         <>
           {isWorried ? (
             <>
-              <path d="M108 172 q 12 6 22 4" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.85"/>
-              <path d="M190 176 q 12 -6 22 -4" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.85"/>
+              <path d="M124 162 q 10 6 20 4" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
+              <path d="M176 166 q 10 -6 20 -4" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
             </>
           ) : (
             <>
-              <path d="M108 178 q 12 -6 22 -1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
-              <path d="M190 178 q 12 -5 22 1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
+              <path d="M124 160 q 10 -4 20 -1" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
+              <path d="M176 159 q 10 -3 20 1" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
             </>
           )}
         </>
@@ -346,91 +431,94 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
       {/* Eyes */}
       {isSurprised ? (
         <>
-          <circle cx="126" cy="212" r="17" fill="#0B1220" />
-          <circle cx="194" cy="212" r="17" fill="#0B1220" />
-          <circle cx="130" cy="207" r="5" fill="#FFFFFF" />
-          <circle cx="198" cy="207" r="5" fill="#FFFFFF" />
-          {/* Shock lines */}
-          <path d="M104 178 l 6 -8 M 118 172 l 4 -10" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
-          <path d="M216 178 l -6 -8 M 202 172 l -4 -10" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
+          <circle cx="138" cy="186" r="12" fill="#0B1220" />
+          <circle cx="182" cy="186" r="12" fill="#0B1220" />
+          <circle cx="142" cy="182" r="4" fill="#FFFFFF" />
+          <circle cx="186" cy="182" r="4" fill="#FFFFFF" />
+          <path d="M120 154 l 4 -8 M 132 148 l 2 -8" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
+          <path d="M200 154 l -4 -8 M 188 148 l -2 -8" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
         </>
       ) : isThinking ? (
         <>
-          <path d="M112 216 Q 126 200 140 216" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
-          <path d="M180 216 Q 194 200 208 216" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
+          <path d="M124 186 Q 138 174 152 186" stroke="#0B1220" strokeWidth="5" fill="none" strokeLinecap="round"/>
+          <path d="M168 186 Q 182 174 196 186" stroke="#0B1220" strokeWidth="5" fill="none" strokeLinecap="round"/>
         </>
       ) : isWorried ? (
         <>
-          {/* Softer, half-closed anime eyes */}
-          <ellipse cx="126" cy="220" rx="16" ry="14" fill="#020617"/>
-          <ellipse cx="194" cy="220" rx="16" ry="14" fill="#020617"/>
-          <ellipse cx="126" cy="222" rx="12" ry="10" fill={`url(#${g("iris")})`}/>
-          <ellipse cx="194" cy="222" rx="12" ry="10" fill={`url(#${g("iris")})`}/>
-          <ellipse cx="126" cy="225" rx="5" ry="6" fill="#020617"/>
-          <ellipse cx="194" cy="225" rx="5" ry="6" fill="#020617"/>
-          <circle cx="130" cy="216" r="3" fill="#FFFFFF"/>
-          <circle cx="198" cy="216" r="3" fill="#FFFFFF"/>
-          {/* Sweat drop */}
-          <path d="M228 176 c -3 6 -6 10 -6 14 a 6 6 0 0 0 12 0 c 0 -4 -3 -8 -6 -14 z" fill="#7FE7FF" stroke="#38BDF8" strokeWidth="1"/>
-          <circle cx="226" cy="186" r="1.6" fill="#FFFFFF"/>
+          <ellipse cx="138" cy="188" rx="12" ry="10" fill="#020617"/>
+          <ellipse cx="182" cy="188" rx="12" ry="10" fill="#020617"/>
+          <ellipse cx="138" cy="190" rx="8" ry="7" fill={`url(#${g("iris")})`}/>
+          <ellipse cx="182" cy="190" rx="8" ry="7" fill={`url(#${g("iris")})`}/>
+          <ellipse cx="138" cy="193" rx="3.5" ry="4" fill="#020617"/>
+          <ellipse cx="182" cy="193" rx="3.5" ry="4" fill="#020617"/>
+          <circle cx="142" cy="184" r="2" fill="#FFFFFF"/>
+          <circle cx="186" cy="184" r="2" fill="#FFFFFF"/>
+          <path d="M216 156 c -2 4 -4 8 -4 12 a 4 4 0 0 0 8 0 c 0 -4 -2 -8 -4 -12 z" fill="#7FE7FF" stroke="#38BDF8" strokeWidth="0.8"/>
         </>
       ) : (
         <>
-          {/* Big anime eyes */}
-          <ellipse cx="126" cy="216" rx="18" ry="22" fill="#020617"/>
-          <ellipse cx="194" cy="216" rx="18" ry="22" fill="#020617"/>
-          {/* Iris gradient */}
-          <ellipse cx="126" cy="218" rx="14" ry="18" fill={`url(#${g("iris")})`}/>
-          <ellipse cx="194" cy="218" rx="14" ry="18" fill={`url(#${g("iris")})`}/>
+          {/* Base */}
+          <ellipse cx="138" cy="190" rx="14" ry="17" fill="#020617"/>
+          <ellipse cx="182" cy="190" rx="14" ry="17" fill="#020617"/>
+          {/* Iris */}
+          <ellipse cx="138" cy="192" rx="11" ry="14" fill={`url(#${g("iris")})`}/>
+          <ellipse cx="182" cy="192" rx="11" ry="14" fill={`url(#${g("iris")})`}/>
           {/* Pupil */}
-          <ellipse cx="126" cy="222" rx="6"  ry="9"  fill="#020617"/>
-          <ellipse cx="194" cy="222" rx="6"  ry="9"  fill="#020617"/>
+          <ellipse cx="138" cy="194" rx="5" ry="7" fill="#020617"/>
+          <ellipse cx="182" cy="194" rx="5" ry="7" fill="#020617"/>
           {/* Top big sparkle */}
-          <ellipse cx="132" cy="207" rx="6" ry="5" fill="#FFFFFF"/>
-          <ellipse cx="200" cy="207" rx="6" ry="5" fill="#FFFFFF"/>
-          {/* Small sparkle bottom */}
-          <circle cx="120" cy="228" r="3" fill="#FFFFFF" opacity="0.9"/>
-          <circle cx="188" cy="228" r="3" fill="#FFFFFF" opacity="0.9"/>
-          {/* Micro glint */}
-          <circle cx="134" cy="214" r="1.4" fill="#FFFFFF" />
-          <circle cx="202" cy="214" r="1.4" fill="#FFFFFF" />
+          <ellipse cx="143" cy="183" rx="5" ry="4" fill="#FFFFFF"/>
+          <ellipse cx="187" cy="183" rx="5" ry="4" fill="#FFFFFF"/>
+          {/* Bottom sparkle */}
+          <circle cx="132" cy="200" r="2.4" fill="#FFFFFF" opacity="0.9"/>
+          <circle cx="176" cy="200" r="2.4" fill="#FFFFFF" opacity="0.9"/>
+          {/* Wave rune inside iris */}
+          <path d="M134 194 q 3 -3 6 0 t 6 0" stroke="#DBFCFF" strokeWidth="0.8" fill="none" opacity="0.85"/>
+          <path d="M178 194 q 3 -3 6 0 t 6 0" stroke="#DBFCFF" strokeWidth="0.8" fill="none" opacity="0.85"/>
         </>
       )}
 
-      {/* Mouth */}
-      {isHappy ? (
+      {/* Long lashes */}
+      {!isSurprised && !isThinking && (
         <>
-          <path d="M138 256 Q 160 284 182 256"
-                stroke="#0B1220" strokeWidth="4.5" fill="#0B1220" fillOpacity="0.4" strokeLinecap="round"/>
-          {/* teeth line */}
-          <path d="M144 266 Q 160 274 176 266" stroke="#FFFFFF" strokeWidth="2" fill="none" strokeLinecap="round" opacity="0.85"/>
+          <path d="M124 174 q 4 -6 12 -6" stroke="#0B1220" strokeWidth="2.4" fill="none" strokeLinecap="round"/>
+          <path d="M148 170 q 4 -3 8 -1" stroke="#0B1220" strokeWidth="2" fill="none" strokeLinecap="round"/>
+          <path d="M168 174 q 4 -6 12 -6" stroke="#0B1220" strokeWidth="2.4" fill="none" strokeLinecap="round"/>
+          <path d="M192 170 q 4 -3 8 -1" stroke="#0B1220" strokeWidth="2" fill="none" strokeLinecap="round"/>
         </>
-      ) : isSurprised ? (
-        <ellipse cx="160" cy="262" rx="8" ry="10" fill="#0B1220"/>
-      ) : isWorried ? (
-        <path d="M144 268 Q 160 254 176 268" stroke="#0B1220" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
-      ) : isGuiding ? (
-        <path d="M144 260 Q 160 272 176 260" stroke="#0B1220" strokeWidth="3.8" fill="none" strokeLinecap="round"/>
-      ) : (
-        <path d="M146 258 Q 160 266 174 258" stroke="#0B1220" strokeWidth="3.8" fill="none" strokeLinecap="round"/>
       )}
 
-      {/* ==================== FLOATING DATA DROPLETS ==================== */}
+      {/* Nose */}
+      <path d="M158 210 q 2 6 4 0" stroke="rgba(11,32,64,0.35)" strokeWidth="1.2" fill="none" strokeLinecap="round"/>
+
+      {/* Lips */}
+      {isSurprised ? (
+        <ellipse cx="160" cy="222" rx="6" ry="7" fill="#7F1D1D"/>
+      ) : isHappy ? (
+        <g>
+          <path d="M146 218 Q 160 234 174 218 Q 168 226 160 226 Q 152 226 146 218 Z"
+                fill={`url(#${g("lip")})`} stroke="#7F1D1D" strokeWidth="0.6"/>
+          <path d="M148 220 Q 160 224 172 220" stroke="#FFFFFF" strokeWidth="1" fill="none" opacity="0.8"/>
+        </g>
+      ) : isWorried ? (
+        <path d="M150 225 Q 160 218 170 225" stroke="#B91C1C" strokeWidth="2.5" fill="#FCA5A5" strokeLinecap="round"/>
+      ) : (
+        <path d="M148 220 Q 160 228 172 220 Q 166 224 160 224 Q 154 224 148 220 Z"
+              fill={`url(#${g("lip")})`} stroke="#7F1D1D" strokeWidth="0.6"/>
+      )}
+
+      {/* Floating pearls / bubbles */}
       <g className="aq-float-a">
-        <circle cx="30"  cy="130" r="6" fill="#7FE7FF" opacity="0.9" filter={`url(#${g("glow")})`}/>
-        <path d="M30 118 c -3 6 -6 10 -6 14 a 6 6 0 0 0 12 0 c 0 -4 -3 -8 -6 -14 z" fill="#7FE7FF" opacity="0.5"/>
+        <circle cx="20"  cy="270" r="5" fill="#FFFFFF" filter={`url(#${g("glow")})`}/>
       </g>
       <g className="aq-float-b">
-        <circle cx="290" cy="120" r="5" fill="#A7F3D0" opacity="0.9" filter={`url(#${g("glow")})`}/>
+        <circle cx="300" cy="290" r="4" fill="#7FE7FF" opacity="0.9" filter={`url(#${g("glow")})`}/>
       </g>
-      <g className="aq-float-a" style={{ animationDelay: "1.2s" }}>
-        <circle cx="16"  cy="290" r="4" fill="#7FE7FF" opacity="0.85"/>
+      <g className="aq-float-a" style={{ animationDelay: "1s" }}>
+        <circle cx="10"  cy="420" r="3" fill="#7FE7FF" opacity="0.8"/>
       </g>
-      <g className="aq-float-b" style={{ animationDelay: "0.8s" }}>
-        <circle cx="302" cy="300" r="4" fill="#A7F3D0" opacity="0.85"/>
-      </g>
-      <g className="aq-float-a" style={{ animationDelay: "2s" }}>
-        <circle cx="12"  cy="380" r="3" fill="#7FE7FF" opacity="0.7"/>
+      <g className="aq-float-b" style={{ animationDelay: "0.6s" }}>
+        <circle cx="308" cy="440" r="3" fill="#A7F3D0" opacity="0.85"/>
       </g>
     </svg>
   );

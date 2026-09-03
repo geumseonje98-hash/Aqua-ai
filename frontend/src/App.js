@@ -8,6 +8,7 @@ import ChatSection from "@/components/ChatSection";
 import QualitySection from "@/components/QualitySection";
 import MarineSection from "@/components/MarineSection";
 import HydrationSection from "@/components/HydrationSection";
+import StickerSection from "@/components/StickerSection";
 import Footer from "@/components/Footer";
 import OceanCanvas from "@/components/OceanCanvas";
 import RippleCursor from "@/components/RippleCursor";
@@ -31,6 +32,8 @@ const Home = () => {
       <MarineSection />
       <WaveDivider flip />
       <HydrationSection />
+      <WaveDivider />
+      <StickerSection />
       <Footer />
     </main>
   );

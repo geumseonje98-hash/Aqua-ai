@@ -1,10 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import MizukiMascot from "./AquaMascot";
-import { Send, Trash2, Sparkles } from "lucide-react";
+import { Send, Trash2, Sparkles, Volume2, VolumeX } from "lucide-react";
 import { toast } from "sonner";
+import { detectMoodFromText } from "@/utils/aquaSticker";
+import { speak, stopSpeaking, isSupported as isVoiceSupported, warmupVoices } from "@/utils/aquaVoice";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 const SESSION_KEY = "aqua_ai_session_id";
+const VOICE_KEY = "aqua_voice_on";
 
 const PROMPTS = [
   "What are 3 easy ways to save water at home?",
@@ -27,8 +30,14 @@ export default function ChatSection() {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [streaming, setStreaming] = useState("");
+  const [mood, setMood] = useState("happy"); // side-card mascot mood
+  const [voiceOn, setVoiceOn] = useState(() => localStorage.getItem(VOICE_KEY) === "1");
+  const [speaking, setSpeaking] = useState(false);
   const sessionId = useRef(getSessionId());
   const listRef = useRef(null);
+
+  useEffect(() => { warmupVoices(); }, []);
+  useEffect(() => { localStorage.setItem(VOICE_KEY, voiceOn ? "1" : "0"); if (!voiceOn) stopSpeaking(); }, [voiceOn]);
 
   useEffect(() => {
     (async () => {
@@ -49,6 +58,9 @@ export default function ChatSection() {
     if (!msg || loading) return;
     setInput("");
     setLoading(true);
+    setMood("thinking");
+    stopSpeaking();
+    setSpeaking(false);
     setMessages((m) => [...m, { role: "user", content: msg, id: Math.random().toString(36) }]);
     setStreaming("");
 
@@ -82,12 +94,28 @@ export default function ChatSection() {
           const chunk = line.replace(/^data:\s?/, "").replace(/\\n/g, "\n");
           assistant += chunk;
           setStreaming(assistant);
+          // live mood based on partial response
+          if (assistant.length % 30 === 0 || assistant.length < 40) {
+            setMood(detectMoodFromText(assistant));
+          }
         }
       }
+      const finalMood = detectMoodFromText(assistant);
+      setMood(finalMood);
       setMessages((m) => [...m, { role: "assistant", content: assistant, id: Math.random().toString(36) }]);
       setStreaming("");
+      // Speak the response
+      if (voiceOn && assistant) {
+        setSpeaking(true);
+        setMood("cheer");
+        speak(assistant, {
+          onEnd: () => { setSpeaking(false); setMood(finalMood); },
+          onError: () => { setSpeaking(false); setMood(finalMood); },
+        });
+      }
     } catch (e) {
-      toast.error("Mizuki got splashed! Try again.");
+      toast.error("Aqua got splashed! Try again.");
+      setMood("surprised");
     } finally {
       setLoading(false);
     }
@@ -96,7 +124,20 @@ export default function ChatSection() {
   const clearAll = async () => {
     await fetch(`${API}/chat/history/${sessionId.current}`, { method: "DELETE" });
     setMessages([]);
+    stopSpeaking();
+    setSpeaking(false);
+    setMood("happy");
     toast.success("Cleared this ocean of thoughts 🌊");
+  };
+
+  const toggleVoice = () => {
+    if (!isVoiceSupported()) { toast.error("Voice not supported in this browser"); return; }
+    setVoiceOn((v) => {
+      const nv = !v;
+      if (!nv) { stopSpeaking(); setSpeaking(false); }
+      else toast.success("Aqua voice ON — she'll narrate replies");
+      return nv;
+    });
   };
 
   const renderContent = (t) => (
@@ -116,13 +157,24 @@ export default function ChatSection() {
               Powered by Gemini 3.1 Pro. Streaming answers with heart, hydration and hydrology.
             </p>
           </div>
-          <button
-            onClick={clearAll}
-            data-testid="chat-clear-button"
-            className="aqua-btn-ghost text-sm"
-          >
-            <Trash2 size={14} /> Clear
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleVoice}
+              data-testid="chat-voice-toggle"
+              className={"aqua-btn-ghost text-sm " + (voiceOn ? "!border-teal-300 !bg-teal-400/15 text-teal-100" : "")}
+              title="Toggle Aqua voice narration"
+            >
+              {voiceOn ? <Volume2 size={14} /> : <VolumeX size={14} />}
+              Voice {voiceOn ? "On" : "Off"}
+            </button>
+            <button
+              onClick={clearAll}
+              data-testid="chat-clear-button"
+              className="aqua-btn-ghost text-sm"
+            >
+              <Trash2 size={14} /> Clear
+            </button>
+          </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-8">
@@ -144,7 +196,7 @@ export default function ChatSection() {
                 <div key={m.id || i} className={`flex gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
                   {m.role === "assistant" && (
                     <div className="shrink-0">
-                      <MizukiMascot size={44} expression="happy" />
+                      <MizukiMascot size={44} expression={detectMoodFromText(m.content)} />
                     </div>
                   )}
                   <div
@@ -162,7 +214,7 @@ export default function ChatSection() {
               ))}
               {streaming && (
                 <div className="flex gap-3 justify-start">
-                  <MizukiMascot size={44} expression="thinking" />
+                  <MizukiMascot size={44} expression={mood} />
                   <div className="max-w-[80%] rounded-2xl px-4 py-3 text-sm md:text-[15px] bg-slate-900/70 border border-cyan-400/20 text-slate-100 rounded-bl-sm">
                     {renderContent(streaming)}
                     <span className="inline-block w-2 h-4 bg-cyan-300 align-middle animate-pulse ml-1" />
@@ -213,17 +265,30 @@ export default function ChatSection() {
 
           {/* Mascot side card */}
           <div className="lg:col-span-4 space-y-5">
-            <div className="glass rounded-3xl p-6 card-hover">
+            <div className="glass rounded-3xl p-6 card-hover" data-testid="chat-mood-card">
               <div className="flex items-center gap-3">
-                <MizukiMascot size={60} expression={loading ? "thinking" : "guiding"} />
+                <div key={mood + (speaking ? "-s" : "")} className="mood-swap relative">
+                  <MizukiMascot size={60} expression={mood} waving={mood === "happy" || mood === "cheer"} />
+                  {speaking && (
+                    <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-teal-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-3 w-3 bg-teal-400"></span>
+                    </span>
+                  )}
+                </div>
                 <div>
-                  <div className="font-display text-lg font-bold">Aqua</div>
-                  <div className="text-xs text-cyan-300">Gemini 3.1 Pro · online</div>
+                  <div className="font-display text-lg font-bold flex items-center gap-2">
+                    Aqua
+                    <span className="text-[10px] uppercase tracking-widest text-teal-300 border border-teal-300/40 rounded-full px-2 py-0.5">
+                      {speaking ? "Speaking" : loading ? "Thinking" : mood}
+                    </span>
+                  </div>
+                  <div className="text-xs text-cyan-300">Gemini 3.1 Pro · {voiceOn ? "voice on" : "text only"}</div>
                 </div>
               </div>
               <p className="mt-4 text-slate-300 text-sm leading-relaxed">
-                I remember what we talk about in this session, so feel free to keep asking follow-ups.
-                Try quizzes, water tips, or ocean trivia!
+                I remember what we talk about in this session — my face reacts to what we're saying.
+                Turn on <b className="text-teal-200">Voice</b> and I'll narrate my replies aloud.
               </p>
             </div>
             <div className="glass rounded-3xl p-6">
