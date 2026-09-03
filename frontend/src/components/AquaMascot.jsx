@@ -1,284 +1,286 @@
 import React from "react";
 
 /**
- * "Aqua" — anime human-girl water-guide mascot (AquaSafe AI)
- * Chibi-proportion anime girl: long flowing water-blue hair with wave streaks,
- * sailor-style sea uniform, tiny wave hairpin, big sparkly eyes, right hand waving.
+ * "Aqua" — AquaSafe AI's Water Guardian mascot
+ * Full-body droplet-headed character: glossy teardrop head with a flame-tip curl,
+ * white hoodie (open zip, drawstrings, pocket, droplet crest), dark pants and
+ * white sneakers, standing on a water splash ring.
  *
  * expression: 'idle' | 'happy' | 'thinking' | 'guiding' | 'cheer' | 'surprised' | 'wave'
- * waving: forces the right hand to wave
  */
-export const AquaMascot = ({ expression = "happy", size = 180, waving = false, className = "" }) => {
+export const AquaMascot = ({ expression = "happy", size = 200, waving = false, className = "" }) => {
   const isHappy = expression === "happy" || expression === "cheer" || expression === "wave";
   const isThinking = expression === "thinking";
   const isSurprised = expression === "surprised";
   const isGuiding = expression === "guiding";
-  const showWave = waving || expression === "wave" || expression === "happy" || expression === "cheer";
+  const showWave = waving || expression === "wave" || expression === "cheer";
 
   return (
     <svg
-      viewBox="0 0 280 360"
+      viewBox="0 0 300 440"
       width={size}
-      height={size * (360 / 280)}
+      height={size * (440 / 300)}
       className={className}
       role="img"
-      aria-label="Aqua anime girl water-guide mascot"
+      aria-label="Aqua water guardian mascot"
       data-testid="anime-mascot-avatar"
     >
       <defs>
-        {/* Skin */}
-        <radialGradient id="g-skin" cx="50%" cy="40%" r="65%">
-          <stop offset="0%"  stopColor="#FFF6EE" />
-          <stop offset="65%" stopColor="#FFE3D0" />
-          <stop offset="100%" stopColor="#F8C8A8" />
-        </radialGradient>
-        {/* Hair (water blue) */}
-        <linearGradient id="g-hair" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0"   stopColor="#9CE7FF" />
-          <stop offset="0.45" stopColor="#38BDF8" />
-          <stop offset="1"   stopColor="#0B4E8A" />
-        </linearGradient>
-        <linearGradient id="g-hair-hi" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.9" />
-          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.05" />
-        </linearGradient>
-        {/* Sailor outfit navy */}
-        <linearGradient id="g-navy" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#1E3A8A" />
-          <stop offset="1" stopColor="#0B2A66" />
-        </linearGradient>
-        {/* Sailor collar white */}
-        <linearGradient id="g-collar" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#FFFFFF" />
-          <stop offset="1" stopColor="#DFF5FF" />
-        </linearGradient>
-        {/* Skirt */}
-        <linearGradient id="g-skirt" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#38BDF8" />
-          <stop offset="1" stopColor="#0F4C8A" />
-        </linearGradient>
-        {/* Bow */}
-        <linearGradient id="g-bow" x1="0" x2="0" y1="0" y2="1">
-          <stop offset="0" stopColor="#F87171" />
-          <stop offset="1" stopColor="#B91C1C" />
-        </linearGradient>
-        {/* Iris */}
-        <radialGradient id="g-iris" cx="35%" cy="30%" r="80%">
-          <stop offset="0%"  stopColor="#DBFCFF" />
-          <stop offset="55%" stopColor="#22C4EE" />
+        {/* Droplet head */}
+        <radialGradient id="droplet" cx="38%" cy="32%" r="72%">
+          <stop offset="0%"  stopColor="#F0FEFF" />
+          <stop offset="35%" stopColor="#67D8FF" />
+          <stop offset="75%" stopColor="#1E90E8" />
           <stop offset="100%" stopColor="#0B4E8A" />
         </radialGradient>
-        {/* Cheek blush */}
-        <radialGradient id="g-cheek" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"  stopColor="#FDA4AF" stopOpacity="0.85" />
-          <stop offset="100%" stopColor="#FB7185" stopOpacity="0" />
-        </radialGradient>
-        {/* Wave clip hairpin */}
-        <linearGradient id="g-pin" x1="0" x2="1">
-          <stop offset="0" stopColor="#E0FBFF" />
-          <stop offset="1" stopColor="#22C4EE" />
+        <linearGradient id="dropShine" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#FFFFFF" stopOpacity="0.95" />
+          <stop offset="1" stopColor="#FFFFFF" stopOpacity="0.15" />
         </linearGradient>
-        <filter id="g-soft" x="-20%" y="-20%" width="140%" height="140%">
+        {/* Hoodie */}
+        <linearGradient id="hoodieWhite" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#FFFFFF" />
+          <stop offset="1" stopColor="#DDEEFA" />
+        </linearGradient>
+        <linearGradient id="hoodieShade" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#C8DEF0" />
+          <stop offset="1" stopColor="#9CB9D5" />
+        </linearGradient>
+        {/* Shirt */}
+        <linearGradient id="shirt" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#1E293B" />
+          <stop offset="1" stopColor="#0F172A" />
+        </linearGradient>
+        {/* Pants */}
+        <linearGradient id="pants" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#111827" />
+          <stop offset="1" stopColor="#020617" />
+        </linearGradient>
+        {/* Sneaker */}
+        <linearGradient id="sneaker" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#FFFFFF" />
+          <stop offset="1" stopColor="#CBD5E1" />
+        </linearGradient>
+        {/* Splash */}
+        <linearGradient id="splash" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stopColor="#7FE7FF" />
+          <stop offset="1" stopColor="#0B4E8A" />
+        </linearGradient>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0" stopColor="#38BDF8" stopOpacity="0.6" />
+          <stop offset="1" stopColor="#0B4E8A" stopOpacity="0" />
+        </radialGradient>
+
+        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
           <feGaussianBlur stdDeviation="2.2" />
         </filter>
       </defs>
 
-      {/* Ground shadow */}
-      <ellipse cx="140" cy="342" rx="88" ry="9" fill="#38BDF8" opacity="0.25" filter="url(#g-soft)" />
-
-      {/* ==================== BACK HAIR ==================== */}
-      <path d="M52 118
-               C 40 160 40 220 60 268
-               C 74 300 108 316 140 316
-               C 172 316 206 300 220 268
-               C 240 220 240 160 228 118
-               C 224 104 206 92 196 100
-               C 196 82 172 66 140 66
-               C 108 66 84 82 84 100
-               C 74 92 56 104 52 118 Z"
-            fill="url(#g-hair)" />
-      {/* Hair wave streaks (highlights) */}
-      <path d="M70 148 C 62 200 76 258 100 296"
-            stroke="url(#g-hair-hi)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.55"/>
-      <path d="M210 150 C 220 202 208 260 184 296"
-            stroke="url(#g-hair-hi)" strokeWidth="7" fill="none" strokeLinecap="round" opacity="0.5"/>
-      {/* Water droplet at hair tips */}
-      <circle cx="60"  cy="270" r="4" fill="#7FE7FF"/>
-      <circle cx="222" cy="270" r="4" fill="#7FE7FF"/>
-
-      {/* ==================== BODY ==================== */}
-      {/* Neck */}
-      <path d="M124 176 L 124 196 Q 140 204 156 196 L 156 176 Z" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-
-      {/* Skirt (pleated) */}
-      <path d="M92 268 L 90 322 L 188 322 L 190 268 Z" fill="url(#g-skirt)" stroke="rgba(255,255,255,0.28)" strokeWidth="1"/>
-      <path d="M110 268 L 108 322 M 128 268 L 128 322 M 140 268 L 140 322 M 152 268 L 152 322 M 172 268 L 174 322"
-            stroke="rgba(11,32,64,0.25)" strokeWidth="1" fill="none"/>
-
-      {/* Legs peeking */}
-      <rect x="118" y="316" width="14" height="20" rx="6" fill="url(#g-skin)" />
-      <rect x="148" y="316" width="14" height="20" rx="6" fill="url(#g-skin)" />
-      {/* Shoes */}
-      <ellipse cx="125" cy="340" rx="12" ry="6" fill="#0B2A66" />
-      <ellipse cx="155" cy="340" rx="12" ry="6" fill="#0B2A66" />
-
-      {/* Sailor top */}
-      <path d="M92 196
-               C 82 210 78 240 88 272
-               L 192 272
-               C 202 240 198 210 188 196
-               C 172 208 108 208 92 196 Z"
-            fill="url(#g-navy)" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
-
-      {/* Sailor collar (over shoulders) */}
-      <path d="M96 196
-               C 108 214 172 214 184 196
-               L 178 210
-               C 172 214 156 218 156 218
-               L 140 244
-               L 124 218
-               C 124 218 108 214 102 210 Z"
-            fill="url(#g-collar)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-      {/* Collar stripes */}
-      <path d="M100 200 C 112 214 168 214 180 200" stroke="#0B2A66" strokeWidth="2" fill="none"/>
-      <path d="M104 204 C 116 216 164 216 176 204" stroke="#22C4EE" strokeWidth="1.5" fill="none"/>
-
-      {/* Red bow */}
+      {/* ---------- Water splash platform ---------- */}
+      <ellipse cx="150" cy="420" rx="130" ry="16" fill="url(#glow)" />
       <g>
-        <path d="M132 226 L 140 232 L 148 226 L 148 240 L 140 236 L 132 240 Z" fill="url(#g-bow)"/>
-        <circle cx="140" cy="234" r="3" fill="#7F1D1D"/>
+        {/* Outer splash ring */}
+        <path d="M40 420
+                 C 60 400 90 400 110 418
+                 C 118 402 138 396 150 402
+                 C 162 396 182 402 190 418
+                 C 210 400 240 400 260 420
+                 C 260 434 220 442 150 442
+                 C 80 442 40 434 40 420 Z"
+              fill="url(#splash)" opacity="0.85" />
+        {/* Splash droplets */}
+        <circle cx="30"  cy="410" r="4" fill="#7FE7FF" />
+        <circle cx="18"  cy="398" r="3" fill="#7FE7FF" />
+        <circle cx="278" cy="404" r="4" fill="#7FE7FF" />
+        <circle cx="290" cy="392" r="3" fill="#7FE7FF" />
+        <circle cx="90"  cy="392" r="3" fill="#A7F3D0" />
+        <circle cx="220" cy="392" r="3" fill="#A7F3D0" />
+        {/* Ripple lines */}
+        <ellipse cx="150" cy="428" rx="120" ry="6" fill="none" stroke="rgba(127,231,255,0.7)" strokeWidth="1.2" />
+        <ellipse cx="150" cy="434" rx="90"  ry="4" fill="none" stroke="rgba(127,231,255,0.45)" strokeWidth="1" />
       </g>
 
-      {/* Left arm resting */}
-      <path d="M92 216
-               C 74 236 66 268 74 288
-               C 78 298 90 300 96 292
-               C 100 286 100 256 108 240 Z"
-            fill="url(#g-navy)" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
-      <circle cx="82" cy="290" r="11" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-
-      {/* Right arm - waving */}
-      <g className={showWave ? "aq-wave-arm" : ""} style={{ transformOrigin: "192px 218px" }}>
-        <path d="M186 210
-                 C 214 194 240 168 250 138
-                 C 254 124 244 116 232 122
-                 C 216 132 196 156 174 186 Z"
-              fill="url(#g-navy)" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
-        {/* Sleeve cuff white */}
-        <ellipse cx="240" cy="130" rx="11" ry="6" fill="#DFF5FF" transform="rotate(-30 240 130)"/>
-        {/* Hand */}
-        <g transform="translate(246 124)">
-          <circle r="13" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-          {/* fingers */}
-          <path d="M-9 -6 q 3 -8 8 -8 q 4 0 5 4 z" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-          <path d="M-3 -12 q 2 -8 8 -8 q 5 0 5 4 z" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-          <path d="M4 -13 q 2 -8 8 -6 q 4 1 4 5 z" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-          <path d="M10 -10 q 4 -6 8 -3 q 3 2 2 5 z" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
-        </g>
+      {/* ---------- Sneakers ---------- */}
+      <g>
+        {/* Left sneaker */}
+        <path d="M92 388 L 92 410 C 92 420 100 424 112 424 L 138 424 C 144 424 148 420 148 414 L 148 388 Z"
+              fill="url(#sneaker)" stroke="#94A3B8" strokeWidth="1.4"/>
+        <path d="M92 408 L 148 408" stroke="#0EA5E9" strokeWidth="3"/>
+        <path d="M118 392 L 118 406 M 128 392 L 128 406 M 138 392 L 138 406"
+              stroke="#94A3B8" strokeWidth="1" fill="none"/>
+        <ellipse cx="120" cy="418" rx="20" ry="4" fill="#0F172A" opacity="0.35"/>
+        {/* Right sneaker */}
+        <path d="M152 388 L 152 414 C 152 420 156 424 162 424 L 188 424 C 200 424 208 420 208 410 L 208 388 Z"
+              fill="url(#sneaker)" stroke="#94A3B8" strokeWidth="1.4"/>
+        <path d="M152 408 L 208 408" stroke="#0EA5E9" strokeWidth="3"/>
+        <path d="M162 392 L 162 406 M 172 392 L 172 406 M 182 392 L 182 406"
+              stroke="#94A3B8" strokeWidth="1" fill="none"/>
+        <ellipse cx="180" cy="418" rx="20" ry="4" fill="#0F172A" opacity="0.35"/>
       </g>
 
-      {/* ==================== HEAD ==================== */}
-      {/* Face */}
-      <ellipse cx="140" cy="124" rx="58" ry="66" fill="url(#g-skin)" stroke="rgba(11,32,64,0.12)" strokeWidth="1"/>
+      {/* ---------- Pants ---------- */}
+      <path d="M104 310 L 96 392 L 148 392 L 150 322 Z" fill="url(#pants)" stroke="#0B1220" strokeWidth="1"/>
+      <path d="M196 310 L 204 392 L 152 392 L 150 322 Z" fill="url(#pants)" stroke="#0B1220" strokeWidth="1"/>
+      {/* Pant crease */}
+      <path d="M120 330 L 108 388" stroke="rgba(148,163,184,0.25)" strokeWidth="1" fill="none"/>
+      <path d="M180 330 L 192 388" stroke="rgba(148,163,184,0.25)" strokeWidth="1" fill="none"/>
+      {/* Belt line hint */}
+      <rect x="102" y="308" width="96" height="6" fill="#0B1220" />
 
-      {/* Front bangs */}
-      <path d="M84 108
-               C 92 74 118 60 140 60
-               C 162 60 190 74 196 108
-               C 188 96 178 92 168 100
-               C 162 86 154 82 144 86
-               C 138 76 130 76 126 86
-               C 116 82 108 88 104 100
-               C 96 92 88 96 84 108 Z"
-            fill="url(#g-hair)" />
-      {/* Side bangs */}
-      <path d="M80 118 C 74 148 78 172 92 188 C 84 180 78 168 76 148 C 74 134 76 124 80 118 Z" fill="url(#g-hair)"/>
-      <path d="M200 118 C 206 148 202 172 188 188 C 196 180 202 168 204 148 C 206 134 204 124 200 118 Z" fill="url(#g-hair)"/>
-      {/* Bang shine */}
-      <path d="M104 78 C 116 74 128 76 140 76" stroke="url(#g-hair-hi)" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7"/>
+      {/* ---------- Torso: shirt + hoodie ---------- */}
+      {/* Black shirt behind hoodie */}
+      <path d="M116 212 L 116 308 L 184 308 L 184 212 Z" fill="url(#shirt)" />
+      {/* V-neck highlight */}
+      <path d="M140 216 L 150 236 L 160 216 Z" fill="#020617" />
 
-      {/* Wave hairpin */}
-      <g transform="translate(96 74) rotate(-14)">
-        <path d="M0 0 Q 8 -8 16 0 T 32 0 T 48 0 L 48 6 L 0 6 Z" fill="url(#g-pin)" stroke="rgba(11,32,64,0.2)" strokeWidth="1"/>
-        <circle cx="8"  cy="-2" r="2.4" fill="#00F5D4"/>
-        <circle cx="40" cy="-2" r="2.4" fill="#00F5D4"/>
+      {/* Hoodie left panel */}
+      <path d="M88 208
+               C 76 232 76 280 88 312
+               L 144 312
+               L 150 236
+               L 128 214
+               Z"
+            fill="url(#hoodieWhite)" stroke="#94B0CC" strokeWidth="1.4"/>
+      {/* Hoodie right panel */}
+      <path d="M212 208
+               C 224 232 224 280 212 312
+               L 156 312
+               L 150 236
+               L 172 214
+               Z"
+            fill="url(#hoodieWhite)" stroke="#94B0CC" strokeWidth="1.4"/>
+      {/* Hood collar */}
+      <path d="M100 208 C 116 196 184 196 200 208 L 194 218 C 178 210 122 210 106 218 Z"
+            fill="url(#hoodieShade)" stroke="#94B0CC" strokeWidth="1.2"/>
+      {/* Drawstrings */}
+      <line x1="132" y1="214" x2="130" y2="244" stroke="#94B0CC" strokeWidth="2" />
+      <line x1="168" y1="214" x2="170" y2="244" stroke="#94B0CC" strokeWidth="2" />
+      <circle cx="130" cy="248" r="3.5" fill="#0EA5E9" />
+      <circle cx="170" cy="248" r="3.5" fill="#0EA5E9" />
+      {/* Pocket line */}
+      <path d="M110 268 C 130 284 170 284 190 268" stroke="#94B0CC" strokeWidth="1.4" fill="none"/>
+      {/* Droplet crest on left chest */}
+      <g transform="translate(122 246)">
+        <path d="M0 0 C -6 8 -10 14 -10 20 a 10 10 0 0 0 20 0 c 0 -6 -4 -12 -10 -20 z" fill="#38BDF8" stroke="#0B4E8A" strokeWidth="1"/>
+        <circle cx="-3" cy="10" r="1.6" fill="#FFFFFF" opacity="0.8"/>
+      </g>
+      {/* Zip line */}
+      <line x1="150" y1="220" x2="150" y2="308" stroke="#0B1220" strokeWidth="1.6" strokeDasharray="3 2"/>
+
+      {/* ---------- Arms ---------- */}
+      {/* Left arm (down, hand in pocket-ish) */}
+      <path d="M88 214
+               C 74 240 68 274 74 306
+               C 76 316 90 320 96 314
+               C 100 306 100 274 104 244 Z"
+            fill="url(#hoodieWhite)" stroke="#94B0CC" strokeWidth="1.4"/>
+      <circle cx="86" cy="316" r="12" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+
+      {/* Right arm (waving or resting) */}
+      <g className={showWave ? "aq-wave-arm" : ""} style={{ transformOrigin: "212px 220px" }}>
+        {showWave ? (
+          <>
+            <path d="M208 210
+                     C 236 190 260 158 268 122
+                     C 272 106 258 96 244 104
+                     C 226 116 208 148 194 190 Z"
+                  fill="url(#hoodieWhite)" stroke="#94B0CC" strokeWidth="1.4"/>
+            {/* Sleeve cuff */}
+            <ellipse cx="258" cy="112" rx="12" ry="7" fill="#DDEEFA" transform="rotate(-32 258 112)"/>
+            {/* Hand */}
+            <g transform="translate(264 108)">
+              <circle r="14" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+              <path d="M-9 -8 q 3 -8 8 -8 q 4 0 5 4 z"  fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M-3 -14 q 2 -8 8 -8 q 5 0 5 4 z" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M4 -15 q 2 -8 8 -6 q 4 1 4 5 z"  fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+              <path d="M10 -12 q 4 -6 8 -3 q 3 2 2 5 z" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="0.8"/>
+            </g>
+          </>
+        ) : (
+          <>
+            {/* Arm down alongside body */}
+            <path d="M212 214
+                     C 226 240 232 274 226 306
+                     C 224 316 210 320 204 314
+                     C 200 306 200 274 196 244 Z"
+                  fill="url(#hoodieWhite)" stroke="#94B0CC" strokeWidth="1.4"/>
+            <circle cx="214" cy="316" r="12" fill="#F8C8A8" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
+          </>
+        )}
       </g>
 
-      {/* Ears */}
-      <ellipse cx="82"  cy="128" rx="6" ry="10" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-      <ellipse cx="198" cy="128" rx="6" ry="10" fill="url(#g-skin)" stroke="rgba(11,32,64,0.15)" strokeWidth="1"/>
-      {/* Pearl earrings */}
-      <circle cx="82"  cy="140" r="3" fill="#E0FBFF" stroke="#22C4EE" strokeWidth="0.8"/>
-      <circle cx="198" cy="140" r="3" fill="#E0FBFF" stroke="#22C4EE" strokeWidth="0.8"/>
+      {/* ---------- HEAD (droplet with flame curl) ---------- */}
+      {/* Curled "flame" top of the droplet */}
+      <path d="M150 20
+               C 138 60 150 88 172 92
+               C 190 96 208 84 210 60
+               C 210 74 202 96 178 108
+               C 158 118 138 108 132 90
+               C 128 74 130 46 150 20 Z"
+            fill="url(#droplet)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.2"/>
 
-      {/* Cheeks */}
-      <ellipse cx="100" cy="146" rx="12" ry="7" fill="url(#g-cheek)" />
-      <ellipse cx="180" cy="146" rx="12" ry="7" fill="url(#g-cheek)" />
+      {/* Main head body */}
+      <path d="M150 74
+               C 100 118 74 160 74 200
+               a 76 74 0 0 0 152 0
+               C 226 160 200 118 150 74 Z"
+            fill="url(#droplet)" stroke="rgba(255,255,255,0.35)" strokeWidth="1.4"/>
 
-      {/* Eyebrows */}
-      {!isSurprised && (
-        <>
-          <path d="M104 108 q 8 -4 18 -1" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
-          <path d="M158 107 q 10 -3 18 1" stroke="#1E3A8A" strokeWidth="3" fill="none" strokeLinecap="round"/>
-        </>
-      )}
+      {/* Head highlight glossy strokes */}
+      <path d="M108 130 C 96 168 100 200 116 216"
+            stroke="url(#dropShine)" strokeWidth="10" fill="none" strokeLinecap="round" opacity="0.85"/>
+      <circle cx="196" cy="140" r="8" fill="#FFFFFF" opacity="0.85"/>
+      <circle cx="210" cy="160" r="3" fill="#FFFFFF" opacity="0.65"/>
 
-      {/* Eyes */}
+      {/* Face - Eyes */}
       {isSurprised ? (
         <>
-          <circle cx="116" cy="130" r="10" fill="#0B1220" />
-          <circle cx="164" cy="130" r="10" fill="#0B1220" />
-          <circle cx="119" cy="127" r="3.2" fill="#fff" />
-          <circle cx="167" cy="127" r="3.2" fill="#fff" />
+          <circle cx="124" cy="192" r="16" fill="#0B1220" />
+          <circle cx="176" cy="192" r="16" fill="#0B1220" />
+          <circle cx="128" cy="188" r="5" fill="#FFFFFF" />
+          <circle cx="180" cy="188" r="5" fill="#FFFFFF" />
         </>
       ) : isThinking ? (
         <>
-          <path d="M104 132 Q 116 122 128 132" stroke="#0B1220" strokeWidth="4.5" fill="none" strokeLinecap="round" />
-          <path d="M152 132 Q 164 122 176 132" stroke="#0B1220" strokeWidth="4.5" fill="none" strokeLinecap="round" />
+          <path d="M110 194 Q 124 178 138 194" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
+          <path d="M162 194 Q 176 178 190 194" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
         </>
       ) : (
         <>
-          {/* White base */}
-          <ellipse cx="116" cy="132" rx="11" ry="14" fill="#FFFFFF"/>
-          <ellipse cx="164" cy="132" rx="11" ry="14" fill="#FFFFFF"/>
-          {/* Iris */}
-          <ellipse cx="116" cy="134" rx="8"  ry="11" fill="url(#g-iris)"/>
-          <ellipse cx="164" cy="134" rx="8"  ry="11" fill="url(#g-iris)"/>
-          {/* Pupil */}
-          <ellipse cx="116" cy="136" rx="3.5" ry="5.5" fill="#0A1B33"/>
-          <ellipse cx="164" cy="136" rx="3.5" ry="5.5" fill="#0A1B33"/>
+          {/* Eye base */}
+          <ellipse cx="124" cy="196" rx="14" ry="17" fill="#0B1220"/>
+          <ellipse cx="176" cy="196" rx="14" ry="17" fill="#0B1220"/>
           {/* Sparkles */}
-          <circle cx="120" cy="129" r="2.6" fill="#fff"/>
-          <circle cx="168" cy="129" r="2.6" fill="#fff"/>
-          <circle cx="112" cy="140" r="1.5" fill="#fff" opacity="0.8"/>
-          <circle cx="160" cy="140" r="1.5" fill="#fff" opacity="0.8"/>
-          {/* Eyelashes */}
-          <path d="M105 125 q 5 -4 10 -3"  stroke="#1E3A8A" strokeWidth="2" fill="none" strokeLinecap="round"/>
-          <path d="M124 122 q 3 -2 6 -1"   stroke="#1E3A8A" strokeWidth="2" fill="none" strokeLinecap="round"/>
-          <path d="M153 125 q 5 -4 10 -3"  stroke="#1E3A8A" strokeWidth="2" fill="none" strokeLinecap="round"/>
-          <path d="M172 122 q 3 -2 6 -1"   stroke="#1E3A8A" strokeWidth="2" fill="none" strokeLinecap="round"/>
+          <circle cx="129" cy="188" r="5" fill="#FFFFFF"/>
+          <circle cx="181" cy="188" r="5" fill="#FFFFFF"/>
+          <circle cx="119" cy="204" r="2.4" fill="#FFFFFF" opacity="0.85"/>
+          <circle cx="171" cy="204" r="2.4" fill="#FFFFFF" opacity="0.85"/>
+          <circle cx="125" cy="182" r="1.6" fill="#FFFFFF" opacity="0.9"/>
+          <circle cx="177" cy="182" r="1.6" fill="#FFFFFF" opacity="0.9"/>
         </>
       )}
 
-      {/* Nose (subtle) */}
-      <path d="M138 150 q 2 4 4 0" stroke="rgba(11,32,64,0.25)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+      {/* Cheek blush */}
+      <ellipse cx="102" cy="216" rx="10" ry="6" fill="rgba(253,164,175,0.55)"/>
+      <ellipse cx="198" cy="216" rx="10" ry="6" fill="rgba(253,164,175,0.55)"/>
 
       {/* Mouth */}
       {isHappy ? (
-        <path d="M128 168 Q 140 182 152 168" stroke="#0B1220" strokeWidth="3.5" fill="#B91C1C" fillOpacity="0.35" strokeLinecap="round" />
+        <path d="M132 232 Q 150 254 168 232"
+              stroke="#0B1220" strokeWidth="4" fill="#0B1220" fillOpacity="0.35" strokeLinecap="round"/>
       ) : isSurprised ? (
-        <ellipse cx="140" cy="170" rx="6" ry="8" fill="#7F1D1D" />
+        <ellipse cx="150" cy="238" rx="7" ry="9" fill="#0B1220"/>
       ) : isGuiding ? (
-        <path d="M130 170 Q 140 176 150 170" stroke="#0B1220" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <path d="M136 234 Q 150 244 164 234" stroke="#0B1220" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
       ) : (
-        <path d="M132 170 Q 140 174 148 170" stroke="#0B1220" strokeWidth="3" fill="none" strokeLinecap="round" />
+        <path d="M138 234 Q 150 240 162 234" stroke="#0B1220" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
       )}
 
-      {/* Floating helper droplets */}
-      <circle cx="252" cy="108" r="6" fill="#7FE7FF" opacity="0.85"/>
-      <circle cx="20"  cy="98"  r="4" fill="#7FE7FF" opacity="0.75"/>
-      <circle cx="256" cy="200" r="3" fill="#A7F3D0" opacity="0.85"/>
-      <circle cx="18"  cy="220" r="3" fill="#A7F3D0" opacity="0.85"/>
+      {/* Tiny helper droplets floating around */}
+      <circle cx="252" cy="70"  r="6" fill="#7FE7FF" opacity="0.85"/>
+      <circle cx="40"  cy="80"  r="4" fill="#7FE7FF" opacity="0.75"/>
+      <circle cx="30"  cy="230" r="3" fill="#A7F3D0" opacity="0.85"/>
+      <circle cx="270" cy="260" r="3" fill="#7FE7FF" opacity="0.85"/>
     </svg>
   );
 };
