@@ -14,6 +14,7 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
   const isThinking = expression === "thinking";
   const isSurprised = expression === "surprised";
   const isGuiding = expression === "guiding";
+  const isWorried = expression === "worried";
   const showWave = waving || expression === "wave" || expression === "cheer";
 
   const rawId = useId();
@@ -328,8 +329,17 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
       {/* Eyebrows */}
       {!isSurprised && (
         <>
-          <path d="M108 178 q 12 -6 22 -1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
-          <path d="M190 178 q 12 -5 22 1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
+          {isWorried ? (
+            <>
+              <path d="M108 172 q 12 6 22 4" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.85"/>
+              <path d="M190 176 q 12 -6 22 -4" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.85"/>
+            </>
+          ) : (
+            <>
+              <path d="M108 178 q 12 -6 22 -1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
+              <path d="M190 178 q 12 -5 22 1" stroke="#0B1220" strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.75"/>
+            </>
+          )}
         </>
       )}
 
@@ -340,11 +350,29 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
           <circle cx="194" cy="212" r="17" fill="#0B1220" />
           <circle cx="130" cy="207" r="5" fill="#FFFFFF" />
           <circle cx="198" cy="207" r="5" fill="#FFFFFF" />
+          {/* Shock lines */}
+          <path d="M104 178 l 6 -8 M 118 172 l 4 -10" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
+          <path d="M216 178 l -6 -8 M 202 172 l -4 -10" stroke="#F59E0B" strokeWidth="2.5" strokeLinecap="round"/>
         </>
       ) : isThinking ? (
         <>
           <path d="M112 216 Q 126 200 140 216" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
           <path d="M180 216 Q 194 200 208 216" stroke="#0B1220" strokeWidth="6" fill="none" strokeLinecap="round"/>
+        </>
+      ) : isWorried ? (
+        <>
+          {/* Softer, half-closed anime eyes */}
+          <ellipse cx="126" cy="220" rx="16" ry="14" fill="#020617"/>
+          <ellipse cx="194" cy="220" rx="16" ry="14" fill="#020617"/>
+          <ellipse cx="126" cy="222" rx="12" ry="10" fill={`url(#${g("iris")})`}/>
+          <ellipse cx="194" cy="222" rx="12" ry="10" fill={`url(#${g("iris")})`}/>
+          <ellipse cx="126" cy="225" rx="5" ry="6" fill="#020617"/>
+          <ellipse cx="194" cy="225" rx="5" ry="6" fill="#020617"/>
+          <circle cx="130" cy="216" r="3" fill="#FFFFFF"/>
+          <circle cx="198" cy="216" r="3" fill="#FFFFFF"/>
+          {/* Sweat drop */}
+          <path d="M228 176 c -3 6 -6 10 -6 14 a 6 6 0 0 0 12 0 c 0 -4 -3 -8 -6 -14 z" fill="#7FE7FF" stroke="#38BDF8" strokeWidth="1"/>
+          <circle cx="226" cy="186" r="1.6" fill="#FFFFFF"/>
         </>
       ) : (
         <>
@@ -379,6 +407,8 @@ export const AquaMascot = ({ expression = "happy", size = 220, waving = false, c
         </>
       ) : isSurprised ? (
         <ellipse cx="160" cy="262" rx="8" ry="10" fill="#0B1220"/>
+      ) : isWorried ? (
+        <path d="M144 268 Q 160 254 176 268" stroke="#0B1220" strokeWidth="3.5" fill="none" strokeLinecap="round"/>
       ) : isGuiding ? (
         <path d="M144 260 Q 160 272 176 260" stroke="#0B1220" strokeWidth="3.8" fill="none" strokeLinecap="round"/>
       ) : (

@@ -6,6 +6,80 @@ import { toast } from "sonner";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
+// Client-side SAFE bands (mirrors backend for live mood)
+const SAFE = {
+  ph:              [6.5, 8.5],
+  hardness:        [60, 200],
+  solids:          [0, 500],
+  chloramines:     [0, 4.0],
+  sulfate:         [0, 250],
+  conductivity:    [0, 800],
+  organic_carbon:  [0, 2.0],
+  trihalomethanes: [0, 80],
+  turbidity:       [0, 5.0],
+};
+const WEIGHTS = {
+  ph: 1.0, hardness: 0.7, solids: 1.0, chloramines: 1.4,
+  sulfate: 0.8, conductivity: 0.9, organic_carbon: 1.0,
+  trihalomethanes: 1.4, turbidity: 1.2,
+};
+
+function paramScore(key, v) {
+  const [lo, hi] = SAFE[key];
+  const val = Number(v);
+  if (Number.isNaN(val)) return null;
+  if (val >= lo && val <= hi) return { score: 100, status: "safe" };
+  const drift = val < lo ? (lo - val) / Math.max(lo, 1) : (val - hi) / Math.max(hi, 1);
+  const score = Math.max(0, 100 - drift * 100);
+  return { score, status: score >= 55 ? "warn" : "unsafe" };
+}
+
+function computeLiveMood(values) {
+  const filled = Object.entries(values).filter(([, v]) => v !== "" && v !== null);
+  if (filled.length === 0) {
+    return { expr: "guiding", label: "Waiting", tone: "idle",
+             text: "Enter values from your report — I'll react as we go!" };
+  }
+  let totalW = 0, sum = 0, anyUnsafe = false, anyWarn = false;
+  for (const [k, v] of filled) {
+    const s = paramScore(k, v);
+    if (!s) continue;
+    const w = WEIGHTS[k] || 1;
+    sum += s.score * w; totalW += w;
+    if (s.status === "unsafe") anyUnsafe = true;
+    if (s.status === "warn") anyWarn = true;
+  }
+  const partial = totalW > 0 ? sum / totalW : 100;
+  // Extrapolate — assume unfilled params average out at 90
+  const unfilledCount = 9 - filled.length;
+  const overall = totalW > 0
+    ? (sum + 90 * unfilledCount * 1.0) / (totalW + unfilledCount * 1.0)
+    : 100;
+
+  if (anyUnsafe || overall < 45) {
+    return { expr: "surprised", label: "Shocked", tone: "bad",
+             text: "Whoa! Some values look dangerous — let's double-check them." };
+  }
+  if (anyWarn || overall < 65) {
+    return { expr: "worried", label: "Worried", tone: "warn",
+             text: "Hmm, a few numbers are outside the safe range. Let's see the full picture." };
+  }
+  if (overall < 82) {
+    return { expr: "guiding", label: "Curious", tone: "good",
+             text: "Looking okay so far — keep the values coming!" };
+  }
+  return { expr: "happy", label: "Happy", tone: "success",
+           text: "These readings are looking beautiful! 💧" };
+}
+
+const MOOD_PILL = {
+  idle:    "bg-slate-500/20 text-slate-200 border-slate-400/30",
+  success: "bg-emerald-400/15 text-emerald-200 border-emerald-300/40",
+  good:    "bg-cyan-400/15 text-cyan-100 border-cyan-300/40",
+  warn:    "bg-amber-400/15 text-amber-200 border-amber-300/40",
+  bad:     "bg-rose-500/15 text-rose-100 border-rose-400/40",
+};
+
 const PARAMS = [
   { key: "ph",              label: "pH",              unit: "",       hint: "Ideal: 6.5–8.5 · Neutral pure water is 7.0.",     placeholder: "Enter pH value", step: 0.1, min: 0,   max: 14 },
   { key: "hardness",        label: "Hardness",        unit: "mg/L",   hint: "Caused by calcium & magnesium · Ideal < 200 mg/L.", placeholder: "Enter value", step: 1,   min: 0,   max: 800 },
@@ -59,8 +133,18 @@ export default function WaterTestPage() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [samples, setSamples] = useState([]);
-  const [aquaExpr, setAquaExpr] = useState("guiding");
   const navigate = useNavigate();
+
+  const liveMood = React.useMemo(() => computeLiveMood(values), [values]);
+  const finalMood = React.useMemo(() => {
+    if (!result) return null;
+    if (result.tone === "success") return { expr: "cheer",     label: "Overjoyed", tone: "success" };
+    if (result.tone === "good")    return { expr: "happy",     label: "Happy",     tone: "good"    };
+    if (result.tone === "warn")    return { expr: "worried",   label: "Worried",   tone: "warn"    };
+    return                                { expr: "surprised", label: "Shocked",   tone: "bad"    };
+  }, [result]);
+  const aquaExpr = step === 2 && finalMood ? finalMood.expr : (loading ? "thinking" : liveMood.expr);
+  const aquaMood = step === 2 && finalMood ? finalMood : liveMood;
 
   useEffect(() => {
     fetch(`${API}/quality/samples`).then((r) => r.json()).then((d) => setSamples(d.samples || []));
@@ -77,7 +161,6 @@ export default function WaterTestPage() {
     PARAMS.forEach((p) => { next[p.key] = s[p.key]; });
     setValues(next);
     toast.success(`Loaded sample: ${s.name}`);
-    setAquaExpr("cheer"); setTimeout(() => setAquaExpr("guiding"), 1600);
   };
 
   const analyze = async () => {
@@ -86,7 +169,6 @@ export default function WaterTestPage() {
       return;
     }
     setLoading(true);
-    setAquaExpr("thinking");
     try {
       const payload = Object.fromEntries(PARAMS.map((p) => [p.key, Number(values[p.key])]));
       const r = await fetch(`${API}/quality/predict`, {
@@ -98,11 +180,9 @@ export default function WaterTestPage() {
       const d = await r.json();
       setResult(d);
       setStep(2);
-      setAquaExpr(d.potable ? "cheer" : "surprised");
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch {
       toast.error("Could not analyze — try again");
-      setAquaExpr("surprised");
     } finally {
       setLoading(false);
     }
@@ -110,7 +190,6 @@ export default function WaterTestPage() {
 
   const restart = () => {
     setStep(1); setResult(null); setValues(emptyValues());
-    setAquaExpr("guiding");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
@@ -147,13 +226,20 @@ export default function WaterTestPage() {
 
               <div className="mt-10 flex flex-col items-start gap-4 max-w-sm"
                    style={{ animation: "fadeUp 900ms 400ms ease-out both" }}>
-                <AquaMascot size={130} expression={aquaExpr} waving />
+                <div key={aquaExpr} className="mood-swap">
+                  <AquaMascot size={140} expression={aquaExpr} waving={aquaExpr === "happy"} />
+                </div>
+                <div className={"inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border " + MOOD_PILL[aquaMood.tone]}
+                     data-testid="mood-pill">
+                  <span className="w-2 h-2 rounded-full bg-current animate-pulse" />
+                  Aqua is <b className="ml-0.5">{aquaMood.label}</b>
+                </div>
                 <div className="speech-down glass-white text-slate-800 rounded-3xl px-5 py-4 shadow-2xl animate-bob">
                   <div className="font-mascot text-base font-semibold flex items-center gap-2">
                     Hi! I'm Aqua <span className="text-lg" style={{ animation: "wave 1.6s ease-in-out infinite" }}>👋</span>
                   </div>
-                  <p className="text-sm text-slate-600 mt-1">
-                    Don't worry if the numbers look complicated. I'll help you make sense of them.
+                  <p className="text-sm text-slate-600 mt-1" data-testid="mood-speech">
+                    {aquaMood.text}
                   </p>
                 </div>
               </div>
@@ -264,9 +350,18 @@ export default function WaterTestPage() {
 
               <div className="glass-white-strong rounded-[24px] p-6 mt-6 text-slate-800">
                 <div className="flex items-center gap-3 mb-3">
-                  <AquaMascot size={64} expression={result.potable ? "cheer" : "guiding"} />
+                  <div key={aquaExpr} className="mood-swap">
+                    <AquaMascot size={70} expression={aquaExpr} waving={aquaExpr === "cheer" || aquaExpr === "happy"} />
+                  </div>
                   <div>
-                    <div className="font-display font-bold">Aqua says</div>
+                    <div className="font-display font-bold flex items-center gap-2">
+                      Aqua is
+                      <span className={"inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold border " + MOOD_PILL[aquaMood.tone]}
+                            data-testid="result-mood-pill">
+                        <span className="w-1.5 h-1.5 rounded-full bg-current animate-pulse" />
+                        {aquaMood.label}
+                      </span>
+                    </div>
                     <div className="text-xs text-slate-500">Recommendations based on WHO/EPA</div>
                   </div>
                 </div>

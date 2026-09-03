@@ -295,6 +295,14 @@ body {
 }
 .aq-float-b { animation: aq-float-b 5s ease-in-out infinite; transform-box: fill-box; }
 
+/* Mood swap pop when Aqua's face changes */
+@keyframes mood-pop {
+  0%   { transform: scale(0.85) rotate(-4deg); opacity: 0.4; filter: blur(2px); }
+  60%  { transform: scale(1.08) rotate(2deg);  opacity: 1;    filter: blur(0); }
+  100% { transform: scale(1)    rotate(0);     opacity: 1; }
+}
+.mood-swap { animation: mood-pop 520ms cubic-bezier(.2,.9,.2,1) both; display: inline-block; }
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
