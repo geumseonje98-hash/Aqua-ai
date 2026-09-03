@@ -281,6 +281,20 @@ body {
 }
 .aq-wave-arm { animation: aq-wave 1.6s ease-in-out infinite; transform-box: fill-box; }
 
+@keyframes aq-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.aq-spin-slow { animation: aq-spin 22s linear infinite; transform-box: fill-box; }
+
+@keyframes aq-float-a {
+  0%,100% { transform: translateY(0) translateX(0); opacity: 0.9; }
+  50%     { transform: translateY(-14px) translateX(6px); opacity: 1; }
+}
+.aq-float-a { animation: aq-float-a 4s ease-in-out infinite; transform-box: fill-box; }
+@keyframes aq-float-b {
+  0%,100% { transform: translateY(0) translateX(0); opacity: 0.9; }
+  50%     { transform: translateY(-18px) translateX(-6px); opacity: 1; }
+}
+.aq-float-b { animation: aq-float-b 5s ease-in-out infinite; transform-box: fill-box; }
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
