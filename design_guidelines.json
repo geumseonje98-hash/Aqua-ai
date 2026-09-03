@@ -1,0 +1,166 @@
+{
+  "project_name": "Aqua AI",
+  "app_type": "hybrid_fullstack",
+  "theme": {
+    "default_mode": "dark",
+    "supported_modes": ["dark", "light"],
+    "description": "Bioluminescent Deep Ocean theme for Dark mode and Crystal Clean Aquamarine theme for Light mode. Emphasizes fluid water physics, neon glowing accents, floating bubbles, and animated anime water droplet mascot guidance."
+  },
+  "typography": {
+    "heading_font": "Outfit, sans-serif",
+    "body_font": "Plus Jakarta Sans, sans-serif",
+    "accent_mascot_font": "Fredoka, cursive",
+    "mono_font": "JetBrains Mono, monospace",
+    "hierarchy": {
+      "h1": "text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight",
+      "h2": "text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight",
+      "h3": "text-xl sm:text-2xl font-semibold tracking-normal",
+      "h4": "text-lg sm:text-xl font-medium",
+      "body": "text-base font-normal leading-relaxed text-slate-300 dark:text-slate-300 light:text-slate-700",
+      "caption": "text-xs sm:text-sm font-medium tracking-wide uppercase text-cyan-400"
+    }
+  },
+  "color_palette": {
+    "background_dark": "#030712",
+    "background_dark_surface": "#091322",
+    "background_dark_card": "rgba(12, 25, 44, 0.65)",
+    "background_light": "#F0F9FF",
+    "background_light_surface": "#E0F2FE",
+    "background_light_card": "rgba(255, 255, 255, 0.85)",
+    "primary": {
+      "main": "#06B6D4",
+      "hover": "#0891B2",
+      "glow": "0 0 25px rgba(6, 182, 212, 0.5)"
+    },
+    "secondary": {
+      "main": "#38BDF8",
+      "hover": "#0284C7"
+    },
+    "accent": {
+      "bioluminescence": "#00F5D4",
+      "deep_blue": "#1E3A8A",
+      "sea_foam": "#A7F3D0",
+      "coral_alert": "#FF6B6B"
+    },
+    "text": {
+      "dark_primary": "#F8FAFC",
+      "dark_secondary": "#94A3B8",
+      "light_primary": "#0F172A",
+      "light_secondary": "#475569"
+    },
+    "borders": {
+      "dark": "rgba(56, 189, 248, 0.2)",
+      "light": "rgba(14, 165, 233, 0.2)"
+    }
+  },
+  "effects_and_motion": {
+    "lenis_smooth_scroll": true,
+    "water_effects": [
+      "Interactive SVG/Canvas Water Ripple effect on click and pointer movement",
+      "Floating animated underwater ambient bubbles in background canvas",
+      "Animated liquid fluid level wave in Hydration tracker",
+      "Dynamic SVG wave section dividers with CSS scroll shifts",
+      "Glow pulsing bioluminescent cards with backdrop blur"
+    ],
+    "animations": {
+      "mascot_float": "animate-bounce duration-3000 ease-in-out infinite",
+      "wave_drift": "animate-pulse duration-2000 ease-in-out infinite",
+      "bubble_rise": "transition-transform ease-out duration-700 hover:-translate-y-2",
+      "card_hover": "transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(6,182,212,0.3)]"
+    }
+  },
+  "anime_mascot_system": {
+    "name": "Mizuki (Droppy)",
+    "role": "Aqua AI Interactive Water Mascot & Companion",
+    "appearance": "Cute anime-style water droplet character with big expressive eyes, glossy liquid sheen, floating mini-bubble helper, and animated expressions",
+    "expression_states": [
+      "idle_floating",
+      "happy_cheering",
+      "thinking_generating",
+      "guiding_explaining",
+      "hydration_celebrating",
+      "surprised_alert"
+    ],
+    "placements": [
+      "Hero section welcoming user with interactive speech bubble",
+      "Persistent floating corner widget that opens quick AI tip or hydration tracker",
+      "Header avatar status indicator showing current AI model status (Gemini 3.1 Pro)",
+      "AI Chatbot response area reacting to query states",
+      "Hydration Tracker milestone cheer manager"
+    ]
+  },
+  "layout_and_grid": {
+    "container": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
+    "hero": "relative min-h-[90vh] flex items-center justify-center pt-24 pb-16 overflow-hidden",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-6 md:gap-8",
+    "cards_grid": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+  },
+  "image_urls": {
+    "marine_life_jellyfish": "https://images.unsplash.com/photo-1548058308-ecbfef50cca5?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "marine_life_jellyfish_swarm": "https://images.unsplash.com/photo-1637308106444-e4a8b915ee3d?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "marine_life_coral_reef": "https://images.unsplash.com/photo-1582967788606-a171c1080cb0?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "marine_life_tropical_fish": "https://images.unsplash.com/photo-1583212292454-1fe6229603b7?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "clean_water_droplet": "https://images.unsplash.com/photo-1606313563546-07cfc29aa96e?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "clean_water_splash": "https://images.unsplash.com/photo-1556197908-96ed0fa30b65?crop=entropy&cs=srgb&fm=jpg&q=85",
+    "drinking_water_glass": "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?crop=entropy&cs=srgb&fm=jpg&q=85"
+  },
+  "key_features_to_build": [
+    {
+      "feature_id": "nav_header",
+      "name": "Aquatic Navigation Header",
+      "description": "Sticky glassmorphism header with logo, section navigation links (AI Assistant, Quality & Conservation, Marine Hub, Hydration Tracker), light/dark mode toggle, and mascot quick hint."
+    },
+    {
+      "feature_id": "hero_section",
+      "name": "Bioluminescent Hero with Anime Mascot",
+      "description": "Interactive hero section with water particle canvas, wave background, animated Mizuki mascot with floating speech bubble, headline, quick stat pills, and CTA buttons."
+    },
+    {
+      "feature_id": "ai_chatbot",
+      "name": "Gemini 3.1 Pro Aqua AI Chatbot",
+      "description": "Interactive AI Chatbot with Mizuki mascot response avatar, topic prompt chips (Water Quality, Conservation Tips, Ocean Biology), local session history, and rich response formatting."
+    },
+    {
+      "feature_id": "water_quality_conservation",
+      "name": "Water Quality & Conservation Hub",
+      "description": "Interactive pH/TDS safety score analyzer tool, global ocean facts, actionable water saving tips with interactive savings calculator."
+    },
+    {
+      "feature_id": "marine_learning_hub",
+      "name": "Ocean & Marine Learning Hub",
+      "description": "Interactive marine biology encyclopedia cards, bioluminescent organism explorer, ocean depth zones visualizer, and ocean quiz."
+    },
+    {
+      "feature_id": "hydration_tracker",
+      "name": "Smart Hydration & Water Intake Tracker",
+      "description": "Daily goal setting, interactive water glass fluid level wave animation, quick-add buttons (+250ml, +500ml), history streak counter, and mascot cheering animations."
+    }
+  ],
+  "testing_and_data_testids": {
+    "nav_bar": "data-testid='app-header'",
+    "nav_ai_chat_link": "data-testid='nav-ai-chat-link'",
+    "nav_quality_link": "data-testid='nav-quality-link'",
+    "nav_marine_link": "data-testid='nav-marine-link'",
+    "nav_hydration_link": "data-testid='nav-hydration-link'",
+    "theme_toggle": "data-testid='theme-toggle-button'",
+    "mascot_avatar": "data-testid='anime-mascot-avatar'",
+    "mascot_speech_bubble": "data-testid='anime-mascot-speech-bubble'",
+    "chat_input": "data-testid='chat-input-textarea'",
+    "chat_submit_button": "data-testid='chat-submit-button'",
+    "chat_message_list": "data-testid='chat-message-list'",
+    "prompt_chip": "data-testid='chat-prompt-chip-0'",
+    "hydration_add_250_btn": "data-testid='hydration-add-250ml-button'",
+    "hydration_progress_bar": "data-testid='hydration-progress-bar'",
+    "quality_ph_input": "data-testid='water-quality-ph-input'",
+    "marine_card": "data-testid='marine-life-card-0'"
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "Ensure all interactive buttons, inputs, links, and cards have proper data-testid attributes.",
+    "Maintain theme consistency with deep ocean dark mode and bioluminescent cyan accents.",
+    "Mascot Mizuki must remain visible, expressive, and helpful throughout all main sections.",
+    "Do NOT use pure black background #000000; use dark slate navy tint #030712 / #091322.",
+    "Do NOT use generic Inter font for main headings; use Outfit or Plus Jakarta Sans with tracking-tight.",
+    "All cards must have glass backdrop filters (backdrop-blur-md or backdrop-blur-xl) with fine semi-transparent borders.",
+    "Include micro-interactions, hover glow effects, fluid wave transitions, and sound/visual toggles."
+  ]
+}
